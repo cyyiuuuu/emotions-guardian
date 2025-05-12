@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情緒守護</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#e0f2fe',
+                        dark: {
+                            primary: '#3b82f6',
+                            secondary: '#0f172a'
+                        }
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        
+        * {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        
+        .main-icon {
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .main-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .page {
+            transition: all 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(20px);
+        }
+        
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            position: relative;
+        }
+        
+        .heart-animation {
+            animation: pulse 1.5s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .dark .emoji-btn {
+            background-color: #1e293b;
+            color: white;
+        }
+        
+        .dark #map {
+            filter: invert(90%) hue-rotate(180deg);
+        }
+        
+        .back-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateX(-3px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl min-h-screen relative">
+        <!-- 主頁面 -->
+        <div id="mainPage" class="page active">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-primary dark:text-dark-primary">情緒守護</h1>
+                <p class="text-gray-600 dark:text-gray-300 mt-2">提供情緒管理與生活輔助功能</p>
+            </header>
+            
+            <div class="grid grid-cols-2 gap-6">
+                <!-- 音樂功能 - 左上角 -->
+                <div>
+                    <button id="musicBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg>
+                        <span class="text-lg font-bold">音樂與白噪音</span>
+                    </button>
+                </div>
+                
+                <!-- 情緒檢測 - 右上角 -->
+                <div>
+                    <button id="emotionBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2 heart-animation" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <span class="text-lg font-bold">情緒檢測</span>
+                    </button>
+                </div>
+                
+                <!-- 餐廳推薦 - 左下角 -->
+                <div>
+                    <button id="restaurantBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span class="text-lg font-bold">友善餐廳</span>
+                    </button>
+                </div>
+                
+                <!-- 設置 - 右下角 -->
+                <div>
+                    <button id="settingsBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span class="text-lg font-bold">設置</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 音樂頁面 -->
+        <div id="musicPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="musicBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">音樂與白噪音</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">連接耳機</h3>
+                    <button id="connectHeadphones" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
+                        連接藍牙耳機
+                    </button>
+                    <p id="headphoneStatus" class="mt-2 text-gray-500 dark:text-gray-400">未連接</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">選擇音樂類型</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">輕鬆音樂</button>
+                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">自然聲音</button>
+                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">白噪音</button>
+                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">粉紅噪音</button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">音量</h3>
+                    <input type="range" min="0" max="100" value="50" class="w-full accent-primary" id="volumeControl">
+                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <span>0</span>
+                        <span>50</span>
+                        <span>100</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">當前播放</h3>
+                    <div class="bg-secondary dark:bg-blue-900 rounded-lg p-6 flex items-center">
+                        <div class="mr-5">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-lg">輕鬆冥想音樂</p>
+                            <p class="text-gray-600 dark:text-gray-300">5:32 / 10:00</p>
+                            
+                            <div class="flex items-center mt-3 space-x-4">
+                                <button class="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="p-3 bg-blue-600 dark:bg-blue-500 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </button>
+                                <button class="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 情緒檢測頁面 -->
+        <div id="emotionPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="emotionBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">情緒檢測</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">智能手錶連接</h3>
+                    <button id="connectWatch" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
+                        連接智能手錶
+                    </button>
+                    <p id="watchStatus" class="mt-2 text-gray-500 dark:text-gray-400">未連接</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">目前心跳</h3>
+                    <div class="bg-secondary dark:bg-blue-900 rounded-lg p-8 text-center">
+                        <div class="inline-block heart-animation">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mx-auto" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-4xl font-bold mt-4" id="heartRate">75</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-lg">每分鐘心跳</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4">情緒狀態</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <button class="emoji-btn bg-secondary dark:bg-blue-900 py-6 px-4 rounded-lg hover:bg-blue-200 text-4xl">😊</button>
+                        <button class="emoji-btn bg-secondary dark:bg-blue-900 py-6 px-4 rounded-lg hover:bg-blue-200 text-4xl">😐</button>
+                        <button class="emoji-btn bg-secondary dark:bg-blue-900 py-6 px-4 rounded-lg hover:bg-blue-200 text-4xl">😟</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">自動處理</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <input type="checkbox" id="autoPlayMusic" class="mr-3 h-5 w-5 accent-primary">
+                            <label for="autoPlayMusic" class="text-lg">情緒波動時自動播放音樂</label>
+                        </div>
+                        <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <input type="checkbox" id="notifyStaff" class="mr-3 h-5 w-5 accent-primary">
+                            <label for="notifyStaff" class="text-lg">持續情緒不穩時通知車站職員</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 餐廳推薦頁面 -->
+        <div id="restaurantPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="restaurantBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">自閉症友善餐廳</h2>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">您的位置</h3>
+                    <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span id="currentLocation" class="text-lg">旺角站</span>
+                        <button id="refreshLocation" class="ml-auto bg-primary text-white p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">附近餐廳</h3>
+                    <div id="map" class="w-full h-64 bg-gray-200 rounded-lg mb-6 relative overflow-hidden">
+                        <!-- 簡易地圖模擬 -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="relative w-full h-full">
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center z-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <div class="absolute top-1/4 left-1/3 w-8 h-8 bg-blue-500 rounded-full"></div>
+                                <div class="absolute top-2/3 left-2/3 w-8 h-8 bg-blue-500 rounded-full"></div>
+                                <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-blue-500 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
+                            <h4 class="font-semibold text-lg">寧靜咖啡屋</h4>
+                            <p class="text-gray-600 dark:text-gray-300">旺角彌敦道610號 - 步行5分鐘</p>
+                            <div class="flex mt-3 flex-wrap">
+                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">低噪音環境</span>
+                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">專業培訓員工</span>
+                            </div>
+                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
+                                前往路線
+                            </button>
+                        </div>
+                        
+                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
+                            <h4 class="font-semibold text-lg">和諧餐廳</h4>
+                            <p class="text-gray-600 dark:text-gray-300">旺角花園街123號 - 步行7分鐘</p>
+                            <div class="flex mt-3 flex-wrap">
+                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">安靜區域</span>
+                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">視覺菜單</span>
+                            </div>
+                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
+                                前往路線
+                            </button>
+                        </div>
+                        
+                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
+                            <h4 class="font-semibold text-lg">友善食坊</h4>
+                            <p class="text-gray-600 dark:text-gray-300">旺角西洋菜南街456號 - 步行10分鐘</p>
+                            <div class="flex mt-3 flex-wrap">
+                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">無障礙設施</span>
+                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">無麩質選項</span>
+                            </div>
+                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
+                                前往路線
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 設置頁面 -->
+        <div id="settingsPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="settingsBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">設置</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4">個人資料</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">姓名</label>
+                            <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您的姓名">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">年齡</label>
+                            <input type="number" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您的年齡">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">性別</label>
+                            <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base">
+                                <option value="">請選擇</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">電話號碼</label>
+                            <input type="tel" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您的電話號碼">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4">設備連接</h3>
+                    <div class="space-y-4">
+                        <button id="connectHeadphonesSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 010-7.072m12.728 0l3.536-3.536M6.343 6.343l-.707-.707a1 1 0 00-1.414 1.414l.707.707m12.728 0l.707-.707a1 1 0 011.414 1.414l-.707.707M3 16V8a9 9 0 0118 0v8" />
+                            </svg>
+                            連接藍牙耳機
+                        </button>
+                        <button id="connectWatchSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            連接智能手錶
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4">緊急聯絡人</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">聯絡人姓名</label>
+                            <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人姓名">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">聯絡人電話</label>
+                            <input type="tel" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人電話">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">關係</label>
+                            <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您與聯絡人的關係">
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">APP 設置</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <span class="text-lg">深色模式</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="darkModeToggle" class="sr-only peer">
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <span class="text-lg">通知</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <span class="text-lg">位置服務</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 檢測深色模式偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('darkModeToggle').checked = true;
+        }
+
+        // 監聽深色模式變化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').checked = true;
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('darkModeToggle').checked = false;
+            }
+        });
+
+        // 深色模式切換
+        document.getElementById('darkModeToggle').addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // 獲取所有頁面
+        const pages = {
+            main: document.getElementById('mainPage'),
+            music: document.getElementById('musicPage'),
+            emotion: document.getElementById('emotionPage'),
+            restaurant: document.getElementById('restaurantPage'),
+            settings: document.getElementById('settingsPage')
+        };
+        
+        // 獲取所有按鈕
+        const buttons = {
+            music: document.getElementById('musicBtn'),
+            emotion: document.getElementById('emotionBtn'),
+            restaurant: document.getElementById('restaurantBtn'),
+            settings: document.getElementById('settingsBtn')
+        };
+        
+        // 獲取返回按鈕
+        const backButtons = {
+            music: document.getElementById('musicBackBtn'),
+            emotion: document.getElementById('emotionBackBtn'),
+            restaurant: document.getElementById('restaurantBackBtn'),
+            settings: document.getElementById('settingsBackBtn')
+        };
+        
+        // 顯示特定頁面，隱藏其他頁面
+        function showPage(pageName) {
+            Object.keys(pages).forEach(key => {
+                if (key === pageName) {
+                    pages[key].classList.add('active');
+                } else {
+                    pages[key].classList.remove('active');
+                }
+            });
+            
+            // 滾動到頁面頂部
+            window.scrollTo(0, 0);
+        }
+        
+        // 設置主按鈕點擊事件
+        Object.keys(buttons).forEach(key => {
+            buttons[key].addEventListener('click', () => {
+                showPage(key);
+            });
+        });
+        
+        // 設置返回按鈕點擊事件
+        Object.keys(backButtons).forEach(key => {
+            backButtons[key].addEventListener('click', () => {
+                showPage('main');
+            });
+        });
+
+        // 模擬心跳數據
+        function simulateHeartRate() {
+            const heartRateEl = document.getElementById('heartRate');
+            let rate = parseInt(heartRateEl.textContent);
+            
+            // 隨機波動
+            const change = Math.floor(Math.random() * 5) - 2;
+            rate += change;
+            
+            // 保持在合理範圍
+            if (rate < 70) rate = 70;
+            if (rate > 80) rate = 80;
+            
+            heartRateEl.textContent = rate;
+            
+            // 情緒波動模擬 (每隔一段時間)
+            if (Math.random() < 0.05) {
+                // 模擬情緒波動
+                rate = Math.floor(Math.random() * 30) + 85;
+                heartRateEl.textContent = rate;
+                
+                if (document.getElementById('autoPlayMusic').checked && pages.emotion.classList.contains('active')) {
+                    // 顯示通知
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center';
+                    notification.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        檢測到情緒波動，正在播放舒緩音樂
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    // 3秒後移除通知
+                    setTimeout(() => {
+                        notification.classList.add('opacity-0');
+                        setTimeout(() => notification.remove(), 500);
+                    }, 3000);
+                    
+                    // 自動跳轉到音樂頁面
+                    setTimeout(() => {
+                        showPage('music');
+                    }, 1500);
+                }
+            }
+            
+            setTimeout(simulateHeartRate, 2000);
+        }
+        
+        // 啟動心跳模擬
+        simulateHeartRate();
+        
+        // 連接設備的模擬功能
+        document.getElementById('connectHeadphones').addEventListener('click', function() {
+            const statusEl = document.getElementById('headphoneStatus');
+            statusEl.textContent = '連接中...';
+            
+            setTimeout(() => {
+                statusEl.textContent = '已連接 - Noise Cancelling Headphones';
+                this.textContent = '斷開連接';
+            }, 1500);
+        });
+        
+        document.getElementById('connectWatch').addEventListener('click', function() {
+            const statusEl = document.getElementById('watchStatus');
+            statusEl.textContent = '連接中...';
+            
+            setTimeout(() => {
+                statusEl.textContent = '已連接 - Smart Watch XYZ';
+                this.textContent = '斷開連接';
+            }, 1500);
+        });
+        
+        // 設置頁面中的連接按鈕也進行相同操作
+        document.getElementById('connectHeadphonesSettings').addEventListener('click', function() {
+            document.getElementById('connectHeadphones').click();
+            
+            const statusEl = document.getElementById('headphoneStatus');
+            if (statusEl.textContent === '未連接') {
+                this.textContent = '連接藍牙耳機';
+            } else {
+                this.textContent = '斷開藍牙耳機';
+            }
+        });
+        
+        document.getElementById('connectWatchSettings').addEventListener('click', function() {
+            document.getElementById('connectWatch').click();
+            
+            const statusEl = document.getElementById('watchStatus');
+            if (statusEl.textContent === '未連接') {
+                this.textContent = '連接智能手錶';
+            } else {
+                this.textContent = '斷開智能手錶';
+            }
+        });
+        
+        // 音樂類型選擇
+        document.querySelectorAll('.music-type').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.music-type').forEach(b => {
+                    b.classList.remove('bg-blue-500', 'text-white');
+                    b.classList.add('bg-secondary', 'dark:bg-blue-900');
+                });
+                
+                this.classList.remove('bg-secondary', 'dark:bg-blue-900');
+                this.classList.add('bg-blue-500', 'text-white');
+            });
+        });
+        
+        // 更新位置按鈕
+        document.getElementById('refreshLocation').addEventListener('click', function() {
+            const locations = ['旺角站', '銅鑼灣站', '中環站', '深水埗站', '九龍灣站'];
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            document.getElementById('currentLocation').textContent = randomLocation;
+        });
+    </script>
+</body>
+</html>
