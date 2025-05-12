@@ -82,6 +82,64 @@
         .back-btn:hover {
             transform: translateX(-3px);
         }
+        
+        /* 遊戲卡片樣式 */
+        .memory-card {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.5rem;
+        }
+        
+        .card-front {
+            transform: rotateY(180deg);
+        }
+        
+        /* 呼吸圈動畫 */
+        .breath-circle {
+            transition: transform 0.4s ease-in-out;
+        }
+        
+        .breath-animation-inhale {
+            animation: inhale 4s ease-in-out;
+        }
+        
+        .breath-animation-hold {
+            animation: hold 4s ease-in-out;
+        }
+        
+        .breath-animation-exhale {
+            animation: exhale 6s ease-in-out;
+        }
+        
+        @keyframes inhale {
+            from { transform: scale(1); }
+            to { transform: scale(1.5); }
+        }
+        
+        @keyframes hold {
+            from { transform: scale(1.5); }
+            to { transform: scale(1.5); }
+        }
+        
+        @keyframes exhale {
+            from { transform: scale(1.5); }
+            to { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
@@ -93,7 +151,7 @@
                 <p class="text-gray-600 dark:text-gray-300 mt-2">提供情緒管理與生活輔助功能</p>
             </header>
             
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-2 gap-6 mb-6">
                 <!-- 音樂功能 - 左上角 -->
                 <div>
                     <button id="musicBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
@@ -114,7 +172,7 @@
                     </button>
                 </div>
                 
-                <!-- 餐廳推薦 - 左下角 -->
+                <!-- 餐廳推薦 - 左中 -->
                 <div>
                     <button id="restaurantBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -124,14 +182,25 @@
                     </button>
                 </div>
                 
-                <!-- 設置 - 右下角 -->
+                <!-- 迷你遊戲 - 右中 -->
                 <div>
-                    <button id="settingsBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                    <button id="gamesBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-lg font-bold">迷你遊戲</span>
+                    </button>
+                </div>
+                
+                <!-- 設置 - 下方 -->
+                <div class="col-span-2">
+                    <button id="settingsBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full py-4 rounded-2xl shadow-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span class="text-lg font-bold">設置</span>
+                        <span class="text-xl font-bold">設置</span>
                     </button>
                 </div>
             </div>
@@ -361,6 +430,116 @@
             </div>
         </div>
         
+        <!-- 迷你遊戲頁面 -->
+        <div id="gamesPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="gamesBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">迷你遊戲</h2>
+                </div>
+                
+                <p class="text-gray-600 dark:text-gray-300 mb-6">以下遊戲可以幫助訓練專注力和緩解情緒</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzMwODJlYyIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjIwIiBmaWxsPSIjZmZmZjAwIi8+PHJlY3QgeD0iOTAiIHk9IjMwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwMDAiLz48cG9seWdvbiBwb2ludHM9IjE1MCw0MCAxNzAsODAgMTMwLDgwIiBmaWxsPSIjMDBmZjAwIi8+PHJlY3QgeD0iMzAiIHk9IjkwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwZmYiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMTAiIHI9IjIwIiBmaWxsPSIjMDBmZmZmIi8+PHBvbHlnb24gcG9pbnRzPSIxNTAsMTAwIDE3MCwxNDAgMTMwLDE0MCIgZmlsbD0iI2ZmYTUwMCIvPjwvc3ZnPg==" alt="記憶配對遊戲" class="w-full h-40 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">記憶配對遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">翻轉卡片找到配對的圖案，訓練記憶力和專注力</p>
+                            <button id="startMemoryGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                                開始遊戲
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzY2YjNmZiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSI0MCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSIzMCIgZmlsbD0icmdiYSg1OSwxMzAsMjQ2LDAuNSkiIHN0cm9rZT0iIzNiODJmNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzUiIHI9IjIwIiBmaWxsPSJyZ2JhKDU5LDEzMCwyNDYsMC43KSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3NSIgcj0iMTAiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNjAgMzBjMCAwIDIwIDIwIDQwIDIwczQwLTIwIDQwLTIwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik02MCAxMjBjMCAwIDIwLTIwIDQwLTIwczQwIDIwIDQwIDIwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==" alt="呼吸練習遊戲" class="w-full h-40 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">呼吸練習遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">跟隨動畫進行深呼吸練習，幫助放鬆並降低焦慮</p>
+                            <button id="startBreathingGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                                開始遊戲
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 記憶配對遊戲頁面 -->
+        <div id="memoryGamePage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="memoryGameBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">記憶配對遊戲</h2>
+                    <div class="ml-auto flex items-center">
+                        <span class="text-lg font-bold mr-2">配對：</span>
+                        <span id="memoryGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0/8</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4 text-center">
+                    <p class="text-gray-600 dark:text-gray-300">翻轉卡片找到配對的圖案</p>
+                </div>
+                
+                <div id="memoryGameBoard" class="grid grid-cols-4 gap-3 mb-6">
+                    <!-- 卡片將由 JavaScript 動態生成 -->
+                </div>
+                
+                <div class="flex justify-between">
+                    <button id="resetMemoryGame" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                        重新開始
+                    </button>
+                    <button id="memoryGameHint" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+                        提示
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 呼吸練習遊戲頁面 -->
+        <div id="breathingGamePage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="breathingGameBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">呼吸練習遊戲</h2>
+                </div>
+                
+                <div class="mb-4 text-center">
+                    <p id="breathingInstruction" class="text-xl font-bold text-primary dark:text-blue-300 mb-2">跟隨圓圈做深呼吸</p>
+                    <p class="text-gray-600 dark:text-gray-300">這個練習可以幫助您放鬆身心</p>
+                </div>
+                
+                <div class="flex justify-center items-center h-64 mb-8">
+                    <div id="breathCircle" class="w-40 h-40 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center border-4 border-blue-500 breath-circle">
+                        <div class="w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full flex items-center justify-center">
+                            <div class="w-24 h-24 bg-blue-300 dark:bg-blue-700 rounded-full flex items-center justify-center">
+                                <div class="w-16 h-16 bg-blue-400 dark:bg-blue-600 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button id="startBreathingExercise" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                        開始練習
+                    </button>
+                </div>
+            </div>
+        </div>
+        
         <!-- 設置頁面 -->
         <div id="settingsPage" class="page">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
@@ -499,6 +678,9 @@
             music: document.getElementById('musicPage'),
             emotion: document.getElementById('emotionPage'),
             restaurant: document.getElementById('restaurantPage'),
+            games: document.getElementById('gamesPage'),
+            memoryGame: document.getElementById('memoryGamePage'),
+            breathingGame: document.getElementById('breathingGamePage'),
             settings: document.getElementById('settingsPage')
         };
         
@@ -507,14 +689,18 @@
             music: document.getElementById('musicBtn'),
             emotion: document.getElementById('emotionBtn'),
             restaurant: document.getElementById('restaurantBtn'),
+            games: document.getElementById('gamesBtn'),
             settings: document.getElementById('settingsBtn')
         };
         
-        // 獲取返回按鈕
+        // 獲取所有返回按鈕
         const backButtons = {
             music: document.getElementById('musicBackBtn'),
             emotion: document.getElementById('emotionBackBtn'),
             restaurant: document.getElementById('restaurantBackBtn'),
+            games: document.getElementById('gamesBackBtn'),
+            memoryGame: document.getElementById('memoryGameBackBtn'),
+            breathingGame: document.getElementById('breathingGameBackBtn'),
             settings: document.getElementById('settingsBackBtn')
         };
         
@@ -541,9 +727,25 @@
         
         // 設置返回按鈕點擊事件
         Object.keys(backButtons).forEach(key => {
-            backButtons[key].addEventListener('click', () => {
-                showPage('main');
-            });
+            if (key === 'memoryGame' || key === 'breathingGame') {
+                backButtons[key].addEventListener('click', () => {
+                    showPage('games');
+                });
+            } else {
+                backButtons[key].addEventListener('click', () => {
+                    showPage('main');
+                });
+            }
+        });
+        
+        // 設置遊戲選擇按鈕
+        document.getElementById('startMemoryGame').addEventListener('click', () => {
+            showPage('memoryGame');
+            initMemoryGame();
+        });
+        
+        document.getElementById('startBreathingGame').addEventListener('click', () => {
+            showPage('breathingGame');
         });
 
         // 模擬心跳數據
@@ -660,6 +862,173 @@
             const locations = ['旺角站', '銅鑼灣站', '中環站', '深水埗站', '九龍灣站'];
             const randomLocation = locations[Math.floor(Math.random() * locations.length)];
             document.getElementById('currentLocation').textContent = randomLocation;
+        });
+        
+        // 記憶配對遊戲功能
+        const memoryGameIcons = [
+            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🥑',
+            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🥑'
+        ];
+        
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+        
+        function initMemoryGame() {
+            const gameBoard = document.getElementById('memoryGameBoard');
+            gameBoard.innerHTML = '';
+            matchedPairs = 0;
+            document.getElementById('memoryGameScore').textContent = `0/8`;
+            
+            // 洗牌算法
+            const shuffledIcons = [...memoryGameIcons];
+            for (let i = shuffledIcons.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledIcons[i], shuffledIcons[j]] = [shuffledIcons[j], shuffledIcons[i]];
+            }
+            
+            // 創建卡片
+            shuffledIcons.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card aspect-square rounded-xl bg-blue-100 dark:bg-blue-900 cursor-pointer overflow-hidden shadow-md relative';
+                card.innerHTML = `
+                    <div class="card-front bg-blue-500 text-center flex-col text-white text-4xl">${icon}</div>
+                    <div class="card-back bg-blue-300 dark:bg-blue-700 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-700 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => flipCard(card, icon, index));
+                gameBoard.appendChild(card);
+            });
+        }
+        
+        function flipCard(card, icon, index) {
+            // 如果卡片已翻或者不能翻或者嘗試翻第三張卡片
+            if (card.classList.contains('flipped') || !canFlip || flippedCards.length === 2) return;
+            
+            // 翻轉卡片
+            card.classList.add('flipped');
+            
+            // 添加到已翻卡片
+            flippedCards.push({ card, icon, index });
+            
+            // 如果翻了兩張卡片
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                
+                // 檢查是否配對
+                if (flippedCards[0].icon === flippedCards[1].icon) {
+                    // 配對成功
+                    matchedPairs++;
+                    document.getElementById('memoryGameScore').textContent = `${matchedPairs}/8`;
+                    
+                    // 標記為已配對
+                    flippedCards.forEach(fc => {
+                        setTimeout(() => {
+                            fc.card.classList.add('bg-green-100');
+                            fc.card.querySelector('.card-front').classList.add('bg-green-500');
+                        }, 500);
+                    });
+                    
+                    flippedCards = [];
+                    canFlip = true;
+                    
+                    // 檢查遊戲是否結束
+                    if (matchedPairs === 8) {
+                        setTimeout(() => {
+                            alert('恭喜你完成了記憶配對遊戲！');
+                        }, 500);
+                    }
+                } else {
+                    // 配對失敗，翻回
+                    setTimeout(() => {
+                        flippedCards.forEach(fc => {
+                            fc.card.classList.remove('flipped');
+                        });
+                        flippedCards = [];
+                        canFlip = true;
+                    }, 1000);
+                }
+            }
+        }
+        
+        // 重置記憶遊戲
+        document.getElementById('resetMemoryGame').addEventListener('click', initMemoryGame);
+        
+        // 記憶遊戲提示功能
+        document.getElementById('memoryGameHint').addEventListener('click', function() {
+            const cards = document.querySelectorAll('.memory-card');
+            const notFlippedCards = Array.from(cards).filter(card => !card.classList.contains('flipped'));
+            
+            // 如果所有卡片都已翻開，不做任何事
+            if (notFlippedCards.length === 0) return;
+            
+            // 暫時顯示所有卡片
+            notFlippedCards.forEach(card => {
+                card.classList.add('flipped');
+            });
+            
+            // 3秒後翻回
+            setTimeout(() => {
+                notFlippedCards.forEach(card => {
+                    card.classList.remove('flipped');
+                });
+            }, 3000);
+        });
+        
+        // 呼吸練習遊戲功能
+        let breathingInterval;
+        let isBreathingActive = false;
+        
+        document.getElementById('startBreathingExercise').addEventListener('click', function() {
+            const breathCircle = document.getElementById('breathCircle');
+            const instruction = document.getElementById('breathingInstruction');
+            
+            if (isBreathingActive) {
+                // 停止練習
+                clearInterval(breathingInterval);
+                this.textContent = '開始練習';
+                instruction.textContent = '跟隨圓圈做深呼吸';
+                breathCircle.classList.remove('breath-animation-inhale', 'breath-animation-hold', 'breath-animation-exhale');
+                isBreathingActive = false;
+            } else {
+                // 開始練習
+                this.textContent = '停止練習';
+                isBreathingActive = true;
+                
+                let phase = 0; // 0: 吸氣, 1: 屏息, 2: 呼氣
+                
+                function updateBreathing() {
+                    switch(phase) {
+                        case 0: // 吸氣
+                            instruction.textContent = '吸氣...';
+                            breathCircle.classList.remove('breath-animation-exhale', 'breath-animation-hold');
+                            breathCircle.classList.add('breath-animation-inhale');
+                            phase = 1;
+                            setTimeout(updateBreathing, 4000);
+                            break;
+                        case 1: // 屏息
+                            instruction.textContent = '屏息...';
+                            breathCircle.classList.remove('breath-animation-inhale', 'breath-animation-exhale');
+                            breathCircle.classList.add('breath-animation-hold');
+                            phase = 2;
+                            setTimeout(updateBreathing, 4000);
+                            break;
+                        case 2: // 呼氣
+                            instruction.textContent = '呼氣...';
+                            breathCircle.classList.remove('breath-animation-inhale', 'breath-animation-hold');
+                            breathCircle.classList.add('breath-animation-exhale');
+                            phase = 0;
+                            setTimeout(updateBreathing, 6000);
+                            break;
+                    }
+                }
+                
+                updateBreathing();
+            }
         });
     </script>
 </body>
