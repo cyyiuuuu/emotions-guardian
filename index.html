@@ -83,32 +83,6 @@
             transform: translateX(-3px);
         }
         
-        /* 遊戲卡片樣式 */
-        .memory-card {
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-        }
-        
-        .memory-card.flipped {
-            transform: rotateY(180deg);
-        }
-        
-        .card-front, .card-back {
-            backface-visibility: hidden;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 0.5rem;
-        }
-        
-        .card-front {
-            transform: rotateY(180deg);
-        }
-        
         /* 呼吸圈動畫 */
         .breath-circle {
             transition: transform 0.4s ease-in-out;
@@ -139,6 +113,159 @@
         @keyframes exhale {
             from { transform: scale(1.5); }
             to { transform: scale(1); }
+        }
+        
+        /* 音樂播放控制樣式 */
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: #e2e8f0;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #3b82f6;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        
+        .audio-control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .audio-control-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 顏色配對遊戲樣式 */
+        .color-tile {
+            width: 100%;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .color-tile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .target-color {
+            width: 80px;
+            height: 80px;
+            border-radius: 0.5rem;
+            margin: 0 auto;
+            border: 2px solid #e2e8f0;
+        }
+        
+        /* 點擊波紋效果 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        /* 數字遊戲樣式 */
+        .number-tile {
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .number-tile:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 音量調節滑塊樣式 */
+        input[type=range].volume-slider {
+            height: 25px;
+            -webkit-appearance: none;
+            margin: 10px 0;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range].volume-slider:focus {
+            outline: none;
+        }
+        
+        input[type=range].volume-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            animate: 0.2s;
+            box-shadow: 0px 0px 0px #000000;
+            background: #e2e8f0;
+            border-radius: 3px;
+            border: 0px solid #000000;
+        }
+        
+        .dark input[type=range].volume-slider::-webkit-slider-runnable-track {
+            background: #384152;
+        }
+        
+        input[type=range].volume-slider::-webkit-slider-thumb {
+            box-shadow: 0px 0px 0px #000000;
+            border: 2px solid #3b82f6;
+            height: 18px;
+            width: 18px;
+            border-radius: 25px;
+            background: #FFFFFF;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -6px;
+        }
+        
+        .dark input[type=range].volume-slider::-webkit-slider-thumb {
+            background: #3b82f6;
+            border-color: white;
+        }
+        
+        .music-type {
+            transition: all 0.2s ease;
+        }
+        
+        .music-type.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .music-type.active:hover {
+            background-color: #2563eb;
+        }
+        
+        .dark .music-type.active {
+            background-color: #3b82f6;
+        }
+        
+        .dark .music-type.active:hover {
+            background-color: #1d4ed8;
         }
     </style>
 </head>
@@ -229,16 +356,16 @@
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4">選擇音樂類型</h3>
                     <div class="grid grid-cols-2 gap-4">
-                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">輕鬆音樂</button>
-                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">自然聲音</button>
-                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">白噪音</button>
-                        <button class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">粉紅噪音</button>
+                        <button data-sound="https://pfst.cf2.poecdn.net/base/audio/30816ad23d2cb85a2a1a58bd63bc78118444d0c9c45289630d8235418286b7bd" class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">輕鬆音樂</button>
+                        <button data-sound="https://pfst.cf2.poecdn.net/base/audio/24916ca12e20fbfb99f4c9cfc189dbdadd8e60489d9070c3d73c65de9f8db3fa" class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">自然聲音</button>
+                        <button data-sound="https://pfst.cf2.poecdn.net/base/audio/85d66c040d1f9cefd01eb1883670b611ca6b632582eb386e1085fd01630fee43" class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">白噪音</button>
+                        <button data-sound="https://pfst.cf2.poecdn.net/base/audio/14e77731250f352c18ce908ead88e75341a92767a874dd748f3f228dd621297e" class="music-type bg-secondary dark:bg-blue-900 py-4 px-4 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition">粉紅噪音</button>
                     </div>
                 </div>
                 
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4">音量</h3>
-                    <input type="range" min="0" max="100" value="50" class="w-full accent-primary" id="volumeControl">
+                    <input type="range" min="0" max="100" value="80" class="volume-slider w-full accent-primary" id="volumeControl">
                     <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
                         <span>0</span>
                         <span>50</span>
@@ -248,39 +375,94 @@
                 
                 <div>
                     <h3 class="text-lg font-semibold mb-4">當前播放</h3>
-                    <div class="bg-secondary dark:bg-blue-900 rounded-lg p-6 flex items-center">
-                        <div class="mr-5">
-                            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="bg-secondary dark:bg-blue-900 rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="mr-5">
+                                <div id="audioVisualizer" class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <p id="nowPlayingTitle" class="font-semibold text-lg">未選擇音樂</p>
+                                <p id="nowPlayingTime" class="text-gray-600 dark:text-gray-300">0:00 / 0:00</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 進度條 -->
+                        <div class="mb-4">
+                            <div id="progressBar" class="progress-bar">
+                                <div id="progressFill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 控制按鈕 -->
+                        <div class="flex items-center justify-center space-x-5">
+                            <button id="prevButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button id="playPauseButton" class="audio-control-btn bg-blue-600 dark:bg-blue-500 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" id="playIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" id="pauseIcon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </button>
+                            <button id="nextButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- 循環和隨機播放選項 -->
+                        <div class="flex justify-center space-x-6 mt-4">
+                            <button id="loopButton" class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </button>
+                            <button id="shuffleButton" class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 音效調節 -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-4">音效調節</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">音調</label>
+                            <input type="range" min="-12" max="12" value="0" class="volume-slider w-full accent-primary" id="pitchControl">
+                            <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                <span>低</span>
+                                <span>正常</span>
+                                <span>高</span>
                             </div>
                         </div>
                         <div>
-                            <p class="font-semibold text-lg">輕鬆冥想音樂</p>
-                            <p class="text-gray-600 dark:text-gray-300">5:32 / 10:00</p>
-                            
-                            <div class="flex items-center mt-3 space-x-4">
-                                <button class="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                </button>
-                                <button class="p-3 bg-blue-600 dark:bg-blue-500 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </button>
-                                <button class="p-2 bg-blue-100 dark:bg-blue-800 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">速度</label>
+                            <input type="range" min="0.5" max="2" step="0.1" value="1" class="volume-slider w-full accent-primary" id="speedControl">
+                            <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                <span>慢</span>
+                                <span>正常</span>
+                                <span>快</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- 隱藏的音頻元素 -->
+                <audio id="audioPlayer" preload="auto"></audio>
             </div>
         </div>
         
@@ -446,11 +628,18 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzMwODJlYyIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjIwIiBmaWxsPSIjZmZmZjAwIi8+PHJlY3QgeD0iOTAiIHk9IjMwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwMDAiLz48cG9seWdvbiBwb2ludHM9IjE1MCw0MCAxNzAsODAgMTMwLDgwIiBmaWxsPSIjMDBmZjAwIi8+PHJlY3QgeD0iMzAiIHk9IjkwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwZmYiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMTAiIHI9IjIwIiBmaWxsPSIjMDBmZmZmIi8+PHBvbHlnb24gcG9pbnRzPSIxNTAsMTAwIDE3MCwxNDAgMTMwLDE0MCIgZmlsbD0iI2ZmYTUwMCIvPjwvc3ZnPg==" alt="記憶配對遊戲" class="w-full h-40 object-cover">
+                        <div class="w-full h-40 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                            <div class="grid grid-cols-2 gap-2 p-4">
+                                <div class="w-16 h-16 bg-red-500 rounded-lg"></div>
+                                <div class="w-16 h-16 bg-yellow-500 rounded-lg"></div>
+                                <div class="w-16 h-16 bg-green-500 rounded-lg"></div>
+                                <div class="w-16 h-16 bg-blue-500 rounded-lg"></div>
+                            </div>
+                        </div>
                         <div class="p-5">
-                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">記憶配對遊戲</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">翻轉卡片找到配對的圖案，訓練記憶力和專注力</p>
-                            <button id="startMemoryGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">顏色配對遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標顏色相同的方塊，訓練反應速度和專注力</p>
+                            <button id="startColorGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
                                 開始遊戲
                             </button>
                         </div>
@@ -466,40 +655,99 @@
                             </button>
                         </div>
                     </div>
+                    
+                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md md:col-span-2">
+                        <div class="w-full h-40 bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center">
+                            <div class="grid grid-cols-3 grid-rows-3 gap-2 p-2">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">1</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">2</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">3</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">4</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">5</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">6</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">7</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">8</div>
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">9</div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">數字順序遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">按照順序點擊數字，訓練記憶力和注意力</p>
+                            <button id="startNumberGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                                開始遊戲
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- 記憶配對遊戲頁面 -->
-        <div id="memoryGamePage" class="page">
+        <!-- 顏色配對遊戲頁面 -->
+        <div id="colorGamePage" class="page">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <div class="flex items-center mb-6">
-                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="memoryGameBackBtn">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="colorGameBackBtn">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">記憶配對遊戲</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">顏色配對遊戲</h2>
                     <div class="ml-auto flex items-center">
-                        <span class="text-lg font-bold mr-2">配對：</span>
-                        <span id="memoryGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0/8</span>
+                        <span class="text-lg font-bold mr-2">得分：</span>
+                        <span id="colorGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0</span>
+                    </div>
+                </div>
+                
+                <div class="mb-8 text-center">
+                    <p class="text-lg mb-4">點擊與目標顏色相同的方塊</p>
+                    <div id="targetColorContainer" class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-gray-600 dark:text-gray-300 mb-3">目標顏色：</p>
+                        <div id="targetColor" class="target-color"></div>
+                    </div>
+                    <p id="gameTimer" class="mt-4 text-lg">時間：30秒</p>
+                    <p id="gameStatus" class="text-lg text-green-500 mt-1 hidden">配對正確！</p>
+                </div>
+                
+                <div id="colorGameGrid" class="grid grid-cols-3 gap-4 mb-6">
+                    <!-- 顏色方塊將由 JavaScript 動態生成 -->
+                </div>
+                
+                <div class="text-center">
+                    <button id="startColorGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                        開始遊戲
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 數字順序遊戲頁面 -->
+        <div id="numberGamePage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="numberGameBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">數字順序遊戲</h2>
+                    <div class="ml-auto flex items-center">
+                        <span class="text-lg font-bold mr-2">等級：</span>
+                        <span id="numberGameLevel" class="text-xl font-bold text-primary dark:text-blue-300">1</span>
                     </div>
                 </div>
                 
                 <div class="mb-4 text-center">
-                    <p class="text-gray-600 dark:text-gray-300">翻轉卡片找到配對的圖案</p>
+                    <p id="numberGameInstructions" class="text-lg mb-2">按照從小到大的順序點擊數字</p>
+                    <p id="numberGameStatus" class="text-green-500 mt-1 hidden">正確！</p>
                 </div>
                 
-                <div id="memoryGameBoard" class="grid grid-cols-4 gap-3 mb-6">
-                    <!-- 卡片將由 JavaScript 動態生成 -->
+                <div id="numberGameGrid" class="grid grid-cols-3 gap-3 mb-6">
+                    <!-- 數字方塊將由 JavaScript 動態生成 -->
                 </div>
                 
-                <div class="flex justify-between">
-                    <button id="resetMemoryGame" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-                        重新開始
-                    </button>
-                    <button id="memoryGameHint" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
-                        提示
+                <div class="text-center">
+                    <button id="startNumberGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                        開始遊戲
                     </button>
                 </div>
             </div>
@@ -679,7 +927,8 @@
             emotion: document.getElementById('emotionPage'),
             restaurant: document.getElementById('restaurantPage'),
             games: document.getElementById('gamesPage'),
-            memoryGame: document.getElementById('memoryGamePage'),
+            colorGame: document.getElementById('colorGamePage'),
+            numberGame: document.getElementById('numberGamePage'),
             breathingGame: document.getElementById('breathingGamePage'),
             settings: document.getElementById('settingsPage')
         };
@@ -699,7 +948,8 @@
             emotion: document.getElementById('emotionBackBtn'),
             restaurant: document.getElementById('restaurantBackBtn'),
             games: document.getElementById('gamesBackBtn'),
-            memoryGame: document.getElementById('memoryGameBackBtn'),
+            colorGame: document.getElementById('colorGameBackBtn'),
+            numberGame: document.getElementById('numberGameBackBtn'),
             breathingGame: document.getElementById('breathingGameBackBtn'),
             settings: document.getElementById('settingsBackBtn')
         };
@@ -727,7 +977,7 @@
         
         // 設置返回按鈕點擊事件
         Object.keys(backButtons).forEach(key => {
-            if (key === 'memoryGame' || key === 'breathingGame') {
+            if (key === 'colorGame' || key === 'numberGame' || key === 'breathingGame') {
                 backButtons[key].addEventListener('click', () => {
                     showPage('games');
                 });
@@ -739,9 +989,12 @@
         });
         
         // 設置遊戲選擇按鈕
-        document.getElementById('startMemoryGame').addEventListener('click', () => {
-            showPage('memoryGame');
-            initMemoryGame();
+        document.getElementById('startColorGame').addEventListener('click', () => {
+            showPage('colorGame');
+        });
+        
+        document.getElementById('startNumberGame').addEventListener('click', () => {
+            showPage('numberGame');
         });
         
         document.getElementById('startBreathingGame').addEventListener('click', () => {
@@ -844,140 +1097,466 @@
             }
         });
         
-        // 音樂類型選擇
-        document.querySelectorAll('.music-type').forEach(btn => {
+        // 音訊處理相關功能
+        const audioPlayer = document.getElementById('audioPlayer');
+        const volumeControl = document.getElementById('volumeControl');
+        const pitchControl = document.getElementById('pitchControl');
+        const speedControl = document.getElementById('speedControl');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const loopButton = document.getElementById('loopButton');
+        const shuffleButton = document.getElementById('shuffleButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+        const nowPlayingTime = document.getElementById('nowPlayingTime');
+        const audioVisualizer = document.getElementById('audioVisualizer');
+        
+        // 音頻文件列表
+        const audioFiles = [
+            { name: "輕鬆音樂", url: "https://pfst.cf2.poecdn.net/base/audio/30816ad23d2cb85a2a1a58bd63bc78118444d0c9c45289630d8235418286b7bd" },
+            { name: "自然聲音", url: "https://pfst.cf2.poecdn.net/base/audio/24916ca12e20fbfb99f4c9cfc189dbdadd8e60489d9070c3d73c65de9f8db3fa" },
+            { name: "白噪音", url: "https://pfst.cf2.poecdn.net/base/audio/85d66c040d1f9cefd01eb1883670b611ca6b632582eb386e1085fd01630fee43" },
+            { name: "粉紅噪音", url: "https://pfst.cf2.poecdn.net/base/audio/14e77731250f352c18ce908ead88e75341a92767a874dd748f3f228dd621297e" }
+        ];
+        
+        let currentAudioIndex = 0;
+        let isPlaying = false;
+        let isLooping = false;
+        let isShuffle = false;
+        let audioContext = null;
+        let sourceNode = null;
+        let gainNode = null;
+        
+        // 初始化音頻播放器
+        function initAudioPlayer() {
+            // 設置默認音量
+            audioPlayer.volume = volumeControl.value / 100;
+            
+            // 音頻播放控制
+            playPauseButton.addEventListener('click', togglePlayPause);
+            
+            // 進度條點擊事件
+            progressBar.addEventListener('click', function(e) {
+                if (audioPlayer.src) {
+                    const percent = e.offsetX / this.offsetWidth;
+                    audioPlayer.currentTime = percent * audioPlayer.duration;
+                    progressFill.style.width = `${percent * 100}%`;
+                }
+            });
+            
+            // 音量控制
+            volumeControl.addEventListener('input', function() {
+                audioPlayer.volume = this.value / 100;
+            });
+            
+            // 音頻事件監聽
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            audioPlayer.addEventListener('ended', handleAudioEnd);
+            
+            // 檢查音頻上下文是否可用
+            try {
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            } catch (e) {
+                console.log('Web Audio API 不支援');
+            }
+            
+            // 前一首與下一首按鈕
+            prevButton.addEventListener('click', playPrevious);
+            nextButton.addEventListener('click', playNext);
+            
+            // 循環和隨機播放按鈕
+            loopButton.addEventListener('click', toggleLoop);
+            shuffleButton.addEventListener('click', toggleShuffle);
+            
+            // 添加音效調節功能
+            pitchControl.addEventListener('input', applyAudioEffects);
+            speedControl.addEventListener('input', function() {
+                audioPlayer.playbackRate = parseFloat(this.value);
+            });
+        }
+        
+        // 切換播放/暫停狀態
+        function togglePlayPause() {
+            if (!audioPlayer.src) {
+                // 如果沒有選擇音頻，默認播放第一個
+                loadAudio(audioFiles[0].url, audioFiles[0].name);
+            }
+            
+            if (isPlaying) {
+                audioPlayer.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                isPlaying = false;
+                audioVisualizer.classList.remove('animate-pulse');
+            } else {
+                audioPlayer.play();
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                isPlaying = true;
+                audioVisualizer.classList.add('animate-pulse');
+            }
+        }
+        
+        // 更新進度條
+        function updateProgress() {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressFill.style.width = `${percent}%`;
+            
+            // 更新時間顯示
+            const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+            const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+            const durationMinutes = Math.floor(audioPlayer.duration / 60) || 0;
+            const durationSeconds = Math.floor(audioPlayer.duration % 60) || 0;
+            
+            nowPlayingTime.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        // 處理音頻結束事件
+        function handleAudioEnd() {
+            if (isLooping) {
+                // 循環播放當前歌曲
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else if (isShuffle) {
+                // 隨機播放
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * audioFiles.length);
+                } while (randomIndex === currentAudioIndex && audioFiles.length > 1);
+                
+                currentAudioIndex = randomIndex;
+                loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+            } else {
+                // 播放下一首
+                playNext();
+            }
+        }
+        
+        // 播放前一首
+        function playPrevious() {
+            currentAudioIndex = (currentAudioIndex - 1 + audioFiles.length) % audioFiles.length;
+            loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+        }
+        
+        // 播放下一首
+        function playNext() {
+            currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
+            loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+        }
+        
+        // 切換循環狀態
+        function toggleLoop() {
+            isLooping = !isLooping;
+            loopButton.classList.toggle('text-primary');
+            loopButton.classList.toggle('dark:text-dark-primary');
+        }
+        
+        // 切換隨機播放狀態
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            shuffleButton.classList.toggle('text-primary');
+            shuffleButton.classList.toggle('dark:text-dark-primary');
+        }
+        
+        // 加載音頻
+        function loadAudio(url, title) {
+            audioPlayer.src = url;
+            nowPlayingTitle.textContent = title;
+            
+            // 重置進度條
+            progressFill.style.width = '0%';
+            
+            // 自動播放
+            audioPlayer.play()
+                .then(() => {
+                    isPlaying = true;
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    audioVisualizer.classList.add('animate-pulse');
+                })
+                .catch(err => {
+                    console.log('播放失敗:', err);
+                    isPlaying = false;
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                });
+        }
+        
+        // 應用音頻效果
+        function applyAudioEffects() {
+            // Web Audio API 目前不支援直接修改音調，這裡只是模擬效果
+            if (pitchControl.value != 0) {
+                audioVisualizer.style.transform = `scale(${1 + parseInt(pitchControl.value) / 20})`;
+            } else {
+                audioVisualizer.style.transform = '';
+            }
+        }
+        
+        // 選擇音樂類型
+        document.querySelectorAll('.music-type').forEach((btn, index) => {
             btn.addEventListener('click', function() {
+                // 移除其他選中狀態
                 document.querySelectorAll('.music-type').forEach(b => {
-                    b.classList.remove('bg-blue-500', 'text-white');
+                    b.classList.remove('active', 'bg-blue-500', 'text-white');
                     b.classList.add('bg-secondary', 'dark:bg-blue-900');
                 });
                 
+                // 添加選中狀態
                 this.classList.remove('bg-secondary', 'dark:bg-blue-900');
-                this.classList.add('bg-blue-500', 'text-white');
+                this.classList.add('active');
+                
+                // 播放選中的音樂
+                const soundUrl = this.dataset.sound;
+                const soundName = this.textContent.trim();
+                
+                // 找到對應的索引
+                const fileIndex = audioFiles.findIndex(file => file.url === soundUrl);
+                if (fileIndex !== -1) {
+                    currentAudioIndex = fileIndex;
+                    loadAudio(soundUrl, soundName);
+                }
             });
         });
         
-        // 更新位置按鈕
-        document.getElementById('refreshLocation').addEventListener('click', function() {
-            const locations = ['旺角站', '銅鑼灣站', '中環站', '深水埗站', '九龍灣站'];
-            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-            document.getElementById('currentLocation').textContent = randomLocation;
-        });
+        // 顏色配對遊戲功能
+        let colorGameActive = false;
+        let colorGameScore = 0;
+        let colorGameTimer;
+        let colorGameTimeLeft = 30;
         
-        // 記憶配對遊戲功能
-        const memoryGameIcons = [
-            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🥑',
-            '🍎', '🍌', '🍇', '🍉', '🍓', '🍒', '🍑', '🥑'
+        // 可用的顏色
+        const gameColors = [
+            { name: '紅色', hex: '#e74c3c' },
+            { name: '藍色', hex: '#3498db' },
+            { name: '綠色', hex: '#2ecc71' },
+            { name: '黃色', hex: '#f1c40f' },
+            { name: '紫色', hex: '#9b59b6' },
+            { name: '橙色', hex: '#e67e22' },
+            { name: '粉色', hex: '#e84393' },
+            { name: '青色', hex: '#00cec9' },
+            { name: '棕色', hex: '#d35400' }
         ];
         
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let canFlip = true;
+        function createColorGame() {
+            const grid = document.getElementById('colorGameGrid');
+            grid.innerHTML = '';
+            
+            // 隨機選擇目標顏色
+            const targetIndex = Math.floor(Math.random() * gameColors.length);
+            const targetColor = gameColors[targetIndex];
+            
+            // 設置目標顏色
+            const targetColorEl = document.getElementById('targetColor');
+            targetColorEl.style.backgroundColor = targetColor.hex;
+            
+            // 隨機排列顏色
+            const shuffledColors = [...gameColors];
+            for (let i = shuffledColors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledColors[i], shuffledColors[j]] = [shuffledColors[j], shuffledColors[i]];
+            }
+            
+            // 創建顏色方塊
+            shuffledColors.forEach(color => {
+                const colorTile = document.createElement('button');
+                colorTile.className = 'color-tile aspect-square';
+                colorTile.style.backgroundColor = color.hex;
+                
+                colorTile.addEventListener('click', function(e) {
+                    if (!colorGameActive) return;
+                    
+                    // 創建點擊波紋效果
+                    const ripple = document.createElement('span');
+                    ripple.className = 'ripple';
+                    this.appendChild(ripple);
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+                    ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                    
+                    // 檢查是否匹配目標顏色
+                    if (color.hex === targetColor.hex) {
+                        colorGameScore++;
+                        document.getElementById('colorGameScore').textContent = colorGameScore;
+                        
+                        // 顯示正確提示
+                        const statusEl = document.getElementById('gameStatus');
+                        statusEl.textContent = '配對正確！';
+                        statusEl.classList.remove('hidden', 'text-red-500');
+                        statusEl.classList.add('text-green-500');
+                        statusEl.classList.remove('hidden');
+                        
+                        setTimeout(() => {
+                            statusEl.classList.add('hidden');
+                        }, 1000);
+                        
+                        // 重新創建遊戲
+                        createColorGame();
+                    } else {
+                        // 顯示錯誤提示
+                        const statusEl = document.getElementById('gameStatus');
+                        statusEl.textContent = '配對錯誤！';
+                        statusEl.classList.remove('hidden', 'text-green-500');
+                        statusEl.classList.add('text-red-500');
+                        statusEl.classList.remove('hidden');
+                        
+                        setTimeout(() => {
+                            statusEl.classList.add('hidden');
+                        }, 1000);
+                    }
+                });
+                
+                grid.appendChild(colorTile);
+            });
+        }
         
-        function initMemoryGame() {
-            const gameBoard = document.getElementById('memoryGameBoard');
-            gameBoard.innerHTML = '';
-            matchedPairs = 0;
-            document.getElementById('memoryGameScore').textContent = `0/8`;
+        function startColorGame() {
+            // 重置遊戲
+            colorGameScore = 0;
+            colorGameTimeLeft = 30;
+            document.getElementById('colorGameScore').textContent = '0';
+            document.getElementById('gameTimer').textContent = `時間：${colorGameTimeLeft}秒`;
+            document.getElementById('gameStatus').classList.add('hidden');
+            
+            // 創建遊戲
+            createColorGame();
+            
+            // 啟動計時器
+            colorGameActive = true;
+            document.getElementById('startColorGameBtn').textContent = '遊戲進行中...';
+            document.getElementById('startColorGameBtn').disabled = true;
+            document.getElementById('startColorGameBtn').classList.add('opacity-50', 'cursor-not-allowed');
+            
+            colorGameTimer = setInterval(() => {
+                colorGameTimeLeft--;
+                document.getElementById('gameTimer').textContent = `時間：${colorGameTimeLeft}秒`;
+                
+                if (colorGameTimeLeft <= 0) {
+                    endColorGame();
+                }
+            }, 1000);
+        }
+        
+        function endColorGame() {
+            clearInterval(colorGameTimer);
+            colorGameActive = false;
+            
+            // 更新按鈕
+            document.getElementById('startColorGameBtn').textContent = '再玩一次';
+            document.getElementById('startColorGameBtn').disabled = false;
+            document.getElementById('startColorGameBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+            
+            // 顯示結果
+            alert(`遊戲結束！您的分數是：${colorGameScore}`);
+        }
+        
+        // 設置顏色遊戲開始按鈕
+        document.getElementById('startColorGameBtn').addEventListener('click', startColorGame);
+        
+        // 數字順序遊戲功能
+        let numberGameActive = false;
+        let numberGameLevel = 1;
+        let expectedNumber = 1;
+        let numberGameNumbers = [];
+        
+        function createNumberGame() {
+            const grid = document.getElementById('numberGameGrid');
+            grid.innerHTML = '';
+            
+            // 決定數字範圍 (根據等級)
+            const maxNumber = Math.min(9, 4 + numberGameLevel);
+            
+            // 創建數字數組
+            numberGameNumbers = Array.from({length: maxNumber}, (_, i) => i + 1);
             
             // 洗牌算法
-            const shuffledIcons = [...memoryGameIcons];
-            for (let i = shuffledIcons.length - 1; i > 0; i--) {
+            for (let i = numberGameNumbers.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [shuffledIcons[i], shuffledIcons[j]] = [shuffledIcons[j], shuffledIcons[i]];
+                [numberGameNumbers[i], numberGameNumbers[j]] = [numberGameNumbers[j], numberGameNumbers[i]];
             }
             
-            // 創建卡片
-            shuffledIcons.forEach((icon, index) => {
-                const card = document.createElement('div');
-                card.className = 'memory-card aspect-square rounded-xl bg-blue-100 dark:bg-blue-900 cursor-pointer overflow-hidden shadow-md relative';
-                card.innerHTML = `
-                    <div class="card-front bg-blue-500 text-center flex-col text-white text-4xl">${icon}</div>
-                    <div class="card-back bg-blue-300 dark:bg-blue-700 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-700 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                `;
+            // 設置期望的第一個數字
+            expectedNumber = 1;
+            
+            // 創建數字方塊
+            numberGameNumbers.forEach(number => {
+                const numberTile = document.createElement('button');
+                numberTile.className = 'number-tile bg-blue-100 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800';
+                numberTile.textContent = number;
                 
-                card.addEventListener('click', () => flipCard(card, icon, index));
-                gameBoard.appendChild(card);
-            });
-        }
-        
-        function flipCard(card, icon, index) {
-            // 如果卡片已翻或者不能翻或者嘗試翻第三張卡片
-            if (card.classList.contains('flipped') || !canFlip || flippedCards.length === 2) return;
-            
-            // 翻轉卡片
-            card.classList.add('flipped');
-            
-            // 添加到已翻卡片
-            flippedCards.push({ card, icon, index });
-            
-            // 如果翻了兩張卡片
-            if (flippedCards.length === 2) {
-                canFlip = false;
-                
-                // 檢查是否配對
-                if (flippedCards[0].icon === flippedCards[1].icon) {
-                    // 配對成功
-                    matchedPairs++;
-                    document.getElementById('memoryGameScore').textContent = `${matchedPairs}/8`;
+                numberTile.addEventListener('click', function() {
+                    if (!numberGameActive) return;
                     
-                    // 標記為已配對
-                    flippedCards.forEach(fc => {
+                    if (parseInt(this.textContent) === expectedNumber) {
+                        // 正確點擊
+                        this.classList.remove('bg-blue-100', 'dark:bg-blue-900');
+                        this.classList.add('bg-green-200', 'dark:bg-green-800', 'pointer-events-none');
+                        
+                        expectedNumber++;
+                        
+                        // 檢查是否完成當前等級
+                        if (expectedNumber > maxNumber) {
+                            // 等級完成
+                            const statusEl = document.getElementById('numberGameStatus');
+                            statusEl.textContent = '等級完成！';
+                            statusEl.classList.remove('hidden');
+                            
+                            setTimeout(() => {
+                                statusEl.classList.add('hidden');
+                                numberGameLevel++;
+                                document.getElementById('numberGameLevel').textContent = numberGameLevel;
+                                createNumberGame();
+                            }, 1500);
+                        }
+                    } else {
+                        // 錯誤點擊
+                        this.classList.add('bg-red-200', 'dark:bg-red-800');
                         setTimeout(() => {
-                            fc.card.classList.add('bg-green-100');
-                            fc.card.querySelector('.card-front').classList.add('bg-green-500');
-                        }, 500);
-                    });
-                    
-                    flippedCards = [];
-                    canFlip = true;
-                    
-                    // 檢查遊戲是否結束
-                    if (matchedPairs === 8) {
-                        setTimeout(() => {
-                            alert('恭喜你完成了記憶配對遊戲！');
-                        }, 500);
+                            this.classList.remove('bg-red-200', 'dark:bg-red-800');
+                            this.classList.add('bg-blue-100', 'dark:bg-blue-900');
+                        }, 300);
                     }
-                } else {
-                    // 配對失敗，翻回
-                    setTimeout(() => {
-                        flippedCards.forEach(fc => {
-                            fc.card.classList.remove('flipped');
-                        });
-                        flippedCards = [];
-                        canFlip = true;
-                    }, 1000);
-                }
+                });
+                
+                grid.appendChild(numberTile);
+            });
+            
+            // 調整網格基於數字數量
+            if (maxNumber <= 4) {
+                grid.className = 'grid grid-cols-2 gap-3 mb-6';
+            } else if (maxNumber <= 9) {
+                grid.className = 'grid grid-cols-3 gap-3 mb-6';
+            } else {
+                grid.className = 'grid grid-cols-4 gap-3 mb-6';
             }
         }
         
-        // 重置記憶遊戲
-        document.getElementById('resetMemoryGame').addEventListener('click', initMemoryGame);
+        function startNumberGame() {
+            // 重置遊戲
+            numberGameLevel = 1;
+            document.getElementById('numberGameLevel').textContent = '1';
+            document.getElementById('numberGameStatus').classList.add('hidden');
+            
+            // 創建遊戲
+            createNumberGame();
+            
+            // 激活遊戲
+            numberGameActive = true;
+            document.getElementById('startNumberGameBtn').textContent = '重新開始';
+        }
         
-        // 記憶遊戲提示功能
-        document.getElementById('memoryGameHint').addEventListener('click', function() {
-            const cards = document.querySelectorAll('.memory-card');
-            const notFlippedCards = Array.from(cards).filter(card => !card.classList.contains('flipped'));
-            
-            // 如果所有卡片都已翻開，不做任何事
-            if (notFlippedCards.length === 0) return;
-            
-            // 暫時顯示所有卡片
-            notFlippedCards.forEach(card => {
-                card.classList.add('flipped');
-            });
-            
-            // 3秒後翻回
-            setTimeout(() => {
-                notFlippedCards.forEach(card => {
-                    card.classList.remove('flipped');
-                });
-            }, 3000);
-        });
+        // 設置數字遊戲開始按鈕
+        document.getElementById('startNumberGameBtn').addEventListener('click', startNumberGame);
         
         // 呼吸練習遊戲功能
         let breathingInterval;
@@ -1030,6 +1609,9 @@
                 updateBreathing();
             }
         });
+        
+        // 初始化音頻播放器
+        initAudioPlayer();
     </script>
 </body>
 </html>
