@@ -10,10 +10,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2563eb',
+                        primary: '#78aed5',
                         secondary: '#e0f2fe',
                         dark: {
-                            primary: '#3b82f6',
+                            primary: '#6ca0c7',
                             secondary: '#0f172a'
                         }
                     }
@@ -126,7 +126,7 @@
         
         .progress-fill {
             height: 100%;
-            background-color: #3b82f6;
+            background-color: #78aed5;
             width: 0%;
             transition: width 0.1s;
         }
@@ -184,22 +184,30 @@
             }
         }
         
-        /* 數字遊戲樣式 */
-        .number-tile {
+        /* 形狀匹配遊戲樣式 */
+        .shape-card {
             width: 100%;
             aspect-ratio: 1/1;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .shape-card:hover {
+            transform: scale(1.05);
         }
         
-        .number-tile:hover {
-            transform: scale(1.05);
+        .shape-container {
+            width: 80%;
+            height: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* 音量調節滑塊樣式 */
@@ -232,7 +240,7 @@
         
         input[type=range].volume-slider::-webkit-slider-thumb {
             box-shadow: 0px 0px 0px #000000;
-            border: 2px solid #3b82f6;
+            border: 2px solid #78aed5;
             height: 18px;
             width: 18px;
             border-radius: 25px;
@@ -243,7 +251,7 @@
         }
         
         .dark input[type=range].volume-slider::-webkit-slider-thumb {
-            background: #3b82f6;
+            background: #78aed5;
             border-color: white;
         }
         
@@ -252,20 +260,20 @@
         }
         
         .music-type.active {
-            background-color: #3b82f6;
+            background-color: #78aed5;
             color: white;
         }
         
         .music-type.active:hover {
-            background-color: #2563eb;
+            background-color: #6ca0c7;
         }
         
         .dark .music-type.active {
-            background-color: #3b82f6;
+            background-color: #6ca0c7;
         }
         
         .dark .music-type.active:hover {
-            background-color: #1d4ed8;
+            background-color: #5d91b8;
         }
     </style>
 </head>
@@ -281,7 +289,7 @@
             <div class="grid grid-cols-2 gap-6 mb-6">
                 <!-- 音樂功能 - 左上角 -->
                 <div>
-                    <button id="musicBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                    <button id="musicBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-400 dark:hover:bg-blue-500 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>
@@ -291,17 +299,17 @@
                 
                 <!-- 情緒監測 - 右上角 -->
                 <div>
-                    <button id="emotionBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                    <button id="emotionBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-400 dark:hover:bg-blue-500 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2 heart-animation" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        <span class="text-lg font-bold">情緒監測</span>
+                        <span class="text-lg font-bold">情緒檢測</span>
                     </button>
                 </div>
                 
                 <!-- 餐廳推薦 - 左中 -->
                 <div>
-                    <button id="restaurantBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                    <button id="restaurantBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-400 dark:hover:bg-blue-500 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -311,7 +319,7 @@
                 
                 <!-- 迷你遊戲 - 右中 -->
                 <div>
-                    <button id="gamesBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
+                    <button id="gamesBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-400 dark:hover:bg-blue-500 text-white w-full aspect-square rounded-2xl shadow-lg flex flex-col items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -322,7 +330,7 @@
                 
                 <!-- 設置 - 下方 -->
                 <div class="col-span-2">
-                    <button id="settingsBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-700 dark:hover:bg-blue-600 text-white w-full py-4 rounded-2xl shadow-lg flex items-center justify-center">
+                    <button id="settingsBtn" class="main-icon bg-primary dark:bg-dark-primary hover:bg-blue-400 dark:hover:bg-blue-500 text-white w-full py-4 rounded-2xl shadow-lg flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -347,7 +355,7 @@
                 
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4">連接耳機</h3>
-                    <button id="connectHeadphones" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
+                    <button id="connectHeadphones" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition w-full sm:w-auto">
                         連接藍牙耳機
                     </button>
                     <p id="headphoneStatus" class="mt-2 text-gray-500 dark:text-gray-400">未連接</p>
@@ -378,7 +386,7 @@
                     <div class="bg-secondary dark:bg-blue-900 rounded-lg p-6">
                         <div class="flex items-center mb-4">
                             <div class="mr-5">
-                                <div id="audioVisualizer" class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                                <div id="audioVisualizer" class="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                                     </svg>
@@ -399,12 +407,12 @@
                         
                         <!-- 控制按鈕 -->
                         <div class="flex items-center justify-center space-x-5">
-                            <button id="prevButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300">
+                            <button id="prevButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-primary dark:text-blue-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                                 </svg>
                             </button>
-                            <button id="playPauseButton" class="audio-control-btn bg-blue-600 dark:bg-blue-500 text-white">
+                            <button id="playPauseButton" class="audio-control-btn bg-primary dark:bg-dark-primary text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" id="playIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -413,7 +421,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </button>
-                            <button id="nextButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300">
+                            <button id="nextButton" class="audio-control-btn bg-blue-100 dark:bg-blue-800 text-primary dark:text-blue-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>
@@ -475,12 +483,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">情緒監測</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">情緒檢測</h2>
                 </div>
                 
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4">智能手錶連接</h3>
-                    <button id="connectWatch" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">
+                    <button id="connectWatch" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition w-full sm:w-auto">
                         連接智能手錶
                     </button>
                     <p id="watchStatus" class="mt-2 text-gray-500 dark:text-gray-400">未連接</p>
@@ -639,9 +647,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <div class="absolute top-1/4 left-1/3 w-8 h-8 bg-blue-500 rounded-full"></div>
-                                <div class="absolute top-2/3 left-2/3 w-8 h-8 bg-blue-500 rounded-full"></div>
-                                <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-blue-500 rounded-full"></div>
+                                <div class="absolute top-1/4 left-1/3 w-8 h-8 bg-primary rounded-full"></div>
+                                <div class="absolute top-2/3 left-2/3 w-8 h-8 bg-primary rounded-full"></div>
+                                <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-primary rounded-full"></div>
                             </div>
                         </div>
                     </div>
@@ -703,7 +711,7 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
-                        <div class="w-full h-40 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                        <div class="w-full h-40 bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
                             <div class="grid grid-cols-2 gap-2 p-4">
                                 <div class="w-16 h-16 bg-red-500 rounded-lg"></div>
                                 <div class="w-16 h-16 bg-yellow-500 rounded-lg"></div>
@@ -714,41 +722,47 @@
                         <div class="p-5">
                             <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">顏色配對遊戲</h3>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標顏色相同的方塊，訓練反應速度和專注力</p>
-                            <button id="startColorGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                            <button id="startColorGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
                                 開始遊戲
                             </button>
                         </div>
                     </div>
                     
                     <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzY2YjNmZiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSI0MCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSIzMCIgZmlsbD0icmdiYSg1OSwxMzAsMjQ2LDAuNSkiIHN0cm9rZT0iIzNiODJmNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzUiIHI9IjIwIiBmaWxsPSJyZ2JhKDU5LDEzMCwyNDYsMC43KSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3NSIgcj0iMTAiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNNjAgMzBjMCAwIDIwIDIwIDQwIDIwczQwLTIwIDQwLTIwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik02MCAxMjBjMCAwIDIwLTIwIDQwLTIwczQwIDIwIDQwIDIwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==" alt="呼吸練習遊戲" class="w-full h-40 object-cover">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iIzc4YWVkNSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSI0MCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiBzdHJva2U9IiM2Y2EwYzciIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSIzMCIgZmlsbD0icmdiYSgxMjAsMTc0LDIxMywwLjUpIiBzdHJva2U9IiM2Y2EwYzciIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSIyMCIgZmlsbD0icmdiYSgxMjAsMTc0LDIxMywwLjcpIiBzdHJva2U9IiM2Y2EwYzciIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSIxMCIgZmlsbD0iIzZjYTBjNyIvPjxwYXRoIGQ9Ik02MCAzMGMwIDAgMjAgMjAgNDAgMjBzNDAtMjAgNDAtMjAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwIDEyMGMwIDAgMjAtMjAgNDAtMjBzNDAgMjAgNDAgMjAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzIi8+PC9zdmc+" alt="呼吸練習遊戲" class="w-full h-40 object-cover">
                         <div class="p-5">
                             <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">呼吸練習遊戲</h3>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">跟隨動畫進行深呼吸練習，幫助放鬆並降低焦慮</p>
-                            <button id="startBreathingGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                            <button id="startBreathingGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
                                 開始遊戲
                             </button>
                         </div>
                     </div>
                     
                     <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md md:col-span-2">
-                        <div class="w-full h-40 bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center">
-                            <div class="grid grid-cols-3 grid-rows-3 gap-2 p-2">
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">1</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">2</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">3</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">4</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">5</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">6</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">7</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">8</div>
-                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">9</div>
+                        <div class="w-full h-40 bg-gradient-to-r from-green-400 to-blue-400 flex items-center justify-center">
+                            <div class="grid grid-cols-3 gap-3 p-3">
+                                <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-primary" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-purple-500" viewBox="0 0 24 24">
+                                        <rect x="4" y="4" width="16" height="16" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-yellow-500" viewBox="0 0 24 24">
+                                        <polygon points="12,2 22,22 2,22" fill="currentColor"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                         <div class="p-5">
-                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">數字順序遊戲</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">按照順序點擊數字，訓練記憶力和注意力</p>
-                            <button id="startNumberGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">形狀匹配遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標形狀相同的卡片，訓練視覺辨識能力</p>
+                            <button id="startShapeGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
                                 開始遊戲
                             </button>
                         </div>
@@ -779,8 +793,7 @@
                         <p class="text-gray-600 dark:text-gray-300 mb-3">目標顏色：</p>
                         <div id="targetColor" class="target-color"></div>
                     </div>
-                    <p id="gameTimer" class="mt-4 text-lg">時間：30秒</p>
-                    <p id="gameStatus" class="text-lg text-green-500 mt-1 hidden">配對正確！</p>
+                    <p id="gameStatus" class="text-lg text-green-500 mt-4 hidden">配對正確！</p>
                 </div>
                 
                 <div id="colorGameGrid" class="grid grid-cols-3 gap-4 mb-6">
@@ -788,40 +801,46 @@
                 </div>
                 
                 <div class="text-center">
-                    <button id="startColorGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                    <button id="startColorGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
                         開始遊戲
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- 數字順序遊戲頁面 -->
-        <div id="numberGamePage" class="page">
+        <!-- 形狀匹配遊戲頁面 -->
+        <div id="shapeGamePage" class="page">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <div class="flex items-center mb-6">
-                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="numberGameBackBtn">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="shapeGameBackBtn">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">數字順序遊戲</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">形狀匹配遊戲</h2>
                     <div class="ml-auto flex items-center">
-                        <span class="text-lg font-bold mr-2">等級：</span>
-                        <span id="numberGameLevel" class="text-xl font-bold text-primary dark:text-blue-300">1</span>
+                        <span class="text-lg font-bold mr-2">得分：</span>
+                        <span id="shapeGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0</span>
                     </div>
                 </div>
                 
-                <div class="mb-4 text-center">
-                    <p id="numberGameInstructions" class="text-lg mb-2">按照從小到大的順序點擊數字</p>
-                    <p id="numberGameStatus" class="text-green-500 mt-1 hidden">正確！</p>
+                <div class="mb-8 text-center">
+                    <p class="text-lg mb-4">點擊與目標形狀相同的卡片</p>
+                    <div id="targetShapeContainer" class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-gray-600 dark:text-gray-300 mb-3">目標形狀：</p>
+                        <div id="targetShape" class="w-20 h-20 mx-auto flex items-center justify-center">
+                            <!-- 目標形狀將在這裡顯示 -->
+                        </div>
+                    </div>
+                    <p id="shapeGameStatus" class="text-lg text-green-500 mt-4 hidden">匹配正確！</p>
                 </div>
                 
-                <div id="numberGameGrid" class="grid grid-cols-3 gap-3 mb-6">
-                    <!-- 數字方塊將由 JavaScript 動態生成 -->
+                <div id="shapeGameGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- 形狀卡片將由 JavaScript 動態生成 -->
                 </div>
                 
                 <div class="text-center">
-                    <button id="startNumberGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                    <button id="startShapeGameBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
                         開始遊戲
                     </button>
                 </div>
@@ -846,7 +865,7 @@
                 </div>
                 
                 <div class="flex justify-center items-center h-64 mb-8">
-                    <div id="breathCircle" class="w-40 h-40 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center border-4 border-blue-500 breath-circle">
+                    <div id="breathCircle" class="w-40 h-40 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center border-4 border-primary breath-circle">
                         <div class="w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full flex items-center justify-center">
                             <div class="w-24 h-24 bg-blue-300 dark:bg-blue-700 rounded-full flex items-center justify-center">
                                 <div class="w-16 h-16 bg-blue-400 dark:bg-blue-600 rounded-full"></div>
@@ -856,7 +875,7 @@
                 </div>
                 
                 <div class="text-center">
-                    <button id="startBreathingExercise" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition text-lg">
+                    <button id="startBreathingExercise" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
                         開始練習
                     </button>
                 </div>
@@ -905,13 +924,13 @@
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold mb-4">設備連接</h3>
                     <div class="space-y-4">
-                        <button id="connectHeadphonesSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                        <button id="connectHeadphonesSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 010-7.072m12.728 0l3.536-3.536M6.343 6.343l-.707-.707a1 1 0 00-1.414 1.414l.707.707m12.728 0l.707-.707a1 1 0 011.414 1.414l-.707.707M3 16V8a9 9 0 0118 0v8" />
                             </svg>
                             連接藍牙耳機
                         </button>
-                        <button id="connectWatchSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                        <button id="connectWatchSettings" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -945,21 +964,21 @@
                             <span class="text-lg">深色模式</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="darkModeToggle" class="sr-only peer">
-                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                             </label>
                         </div>
                         <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                             <span class="text-lg">通知</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked class="sr-only peer">
-                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                             </label>
                         </div>
                         <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                             <span class="text-lg">位置服務</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked class="sr-only peer">
-                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                             </label>
                         </div>
                     </div>
@@ -1003,7 +1022,7 @@
             restaurant: document.getElementById('restaurantPage'),
             games: document.getElementById('gamesPage'),
             colorGame: document.getElementById('colorGamePage'),
-            numberGame: document.getElementById('numberGamePage'),
+            shapeGame: document.getElementById('shapeGamePage'),
             breathingGame: document.getElementById('breathingGamePage'),
             settings: document.getElementById('settingsPage')
         };
@@ -1024,7 +1043,7 @@
             restaurant: document.getElementById('restaurantBackBtn'),
             games: document.getElementById('gamesBackBtn'),
             colorGame: document.getElementById('colorGameBackBtn'),
-            numberGame: document.getElementById('numberGameBackBtn'),
+            shapeGame: document.getElementById('shapeGameBackBtn'),
             breathingGame: document.getElementById('breathingGameBackBtn'),
             settings: document.getElementById('settingsBackBtn')
         };
@@ -1052,7 +1071,7 @@
         
         // 設置返回按鈕點擊事件
         Object.keys(backButtons).forEach(key => {
-            if (key === 'colorGame' || key === 'numberGame' || key === 'breathingGame') {
+            if (key === 'colorGame' || key === 'shapeGame' || key === 'breathingGame') {
                 backButtons[key].addEventListener('click', () => {
                     showPage('games');
                 });
@@ -1066,10 +1085,12 @@
         // 設置遊戲選擇按鈕
         document.getElementById('startColorGame').addEventListener('click', () => {
             showPage('colorGame');
+            createColorGame();
         });
         
-        document.getElementById('startNumberGame').addEventListener('click', () => {
-            showPage('numberGame');
+        document.getElementById('startShapeGame').addEventListener('click', () => {
+            showPage('shapeGame');
+            initShapeGame();
         });
         
         document.getElementById('startBreathingGame').addEventListener('click', () => {
@@ -1376,7 +1397,7 @@
             btn.addEventListener('click', function() {
                 // 移除其他選中狀態
                 document.querySelectorAll('.music-type').forEach(b => {
-                    b.classList.remove('active', 'bg-blue-500', 'text-white');
+                    b.classList.remove('active', 'bg-primary', 'text-white');
                     b.classList.add('bg-secondary', 'dark:bg-blue-900');
                 });
                 
@@ -1400,8 +1421,6 @@
         // 顏色配對遊戲功能
         let colorGameActive = false;
         let colorGameScore = 0;
-        let colorGameTimer;
-        let colorGameTimeLeft = 30;
         
         // 可用的顏色
         const gameColors = [
@@ -1498,140 +1517,188 @@
         function startColorGame() {
             // 重置遊戲
             colorGameScore = 0;
-            colorGameTimeLeft = 30;
             document.getElementById('colorGameScore').textContent = '0';
-            document.getElementById('gameTimer').textContent = `時間：${colorGameTimeLeft}秒`;
             document.getElementById('gameStatus').classList.add('hidden');
             
             // 創建遊戲
             createColorGame();
             
-            // 啟動計時器
+            // 啟動遊戲
             colorGameActive = true;
-            document.getElementById('startColorGameBtn').textContent = '遊戲進行中...';
-            document.getElementById('startColorGameBtn').disabled = true;
-            document.getElementById('startColorGameBtn').classList.add('opacity-50', 'cursor-not-allowed');
-            
-            colorGameTimer = setInterval(() => {
-                colorGameTimeLeft--;
-                document.getElementById('gameTimer').textContent = `時間：${colorGameTimeLeft}秒`;
-                
-                if (colorGameTimeLeft <= 0) {
-                    endColorGame();
-                }
-            }, 1000);
-        }
-        
-        function endColorGame() {
-            clearInterval(colorGameTimer);
-            colorGameActive = false;
-            
-            // 更新按鈕
-            document.getElementById('startColorGameBtn').textContent = '再玩一次';
-            document.getElementById('startColorGameBtn').disabled = false;
-            document.getElementById('startColorGameBtn').classList.remove('opacity-50', 'cursor-not-allowed');
-            
-            // 顯示結果
-            alert(`遊戲結束！您的分數是：${colorGameScore}`);
+            document.getElementById('startColorGameBtn').textContent = '重新開始';
         }
         
         // 設置顏色遊戲開始按鈕
         document.getElementById('startColorGameBtn').addEventListener('click', startColorGame);
         
-        // 數字順序遊戲功能
-        let numberGameActive = false;
-        let numberGameLevel = 1;
-        let expectedNumber = 1;
-        let numberGameNumbers = [];
+        // 形狀匹配遊戲功能
+        let shapeGameActive = false;
+        let shapeGameScore = 0;
         
-        function createNumberGame() {
-            const grid = document.getElementById('numberGameGrid');
+        // 可用的形狀
+        const gameShapes = [
+            { 
+                name: '圓形', 
+                svg: '<circle cx="50" cy="50" r="40" fill="currentColor"/>' 
+            },
+            { 
+                name: '正方形', 
+                svg: '<rect x="10" y="10" width="80" height="80" fill="currentColor"/>' 
+            },
+            { 
+                name: '三角形', 
+                svg: '<polygon points="50,10 90,90 10,90" fill="currentColor"/>' 
+            },
+            { 
+                name: '星星', 
+                svg: '<polygon points="50,10 61,35 90,35 65,55 75,80 50,65 25,80 35,55 10,35 39,35" fill="currentColor"/>' 
+            },
+            { 
+                name: '心形', 
+                svg: '<path d="M50,80 C80,60 100,10 50,30 C0,10 20,60 50,80" fill="currentColor"/>' 
+            },
+            { 
+                name: '菱形', 
+                svg: '<polygon points="50,10 90,50 50,90 10,50" fill="currentColor"/>' 
+            }
+        ];
+        
+        // 形狀的可能顏色
+        const shapeColors = [
+            '#e74c3c', // 紅色
+            '#3498db', // 藍色
+            '#2ecc71', // 綠色
+            '#f1c40f', // 黃色
+            '#9b59b6', // 紫色
+            '#e67e22'  // 橙色
+        ];
+        
+        function initShapeGame() {
+            // 清空網格
+            const grid = document.getElementById('shapeGameGrid');
             grid.innerHTML = '';
             
-            // 決定數字範圍 (根據等級)
-            const maxNumber = Math.min(9, 4 + numberGameLevel);
+            // 隨機選擇目標形狀
+            const targetIndex = Math.floor(Math.random() * gameShapes.length);
+            const targetShape = gameShapes[targetIndex];
             
-            // 創建數字數組
-            numberGameNumbers = Array.from({length: maxNumber}, (_, i) => i + 1);
+            // 設置目標形狀
+            const targetShapeEl = document.getElementById('targetShape');
+            targetShapeEl.innerHTML = `
+                <svg viewBox="0 0 100 100" width="100%" height="100%" class="text-primary">
+                    ${targetShape.svg}
+                </svg>
+            `;
             
-            // 洗牌算法
-            for (let i = numberGameNumbers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [numberGameNumbers[i], numberGameNumbers[j]] = [numberGameNumbers[j], numberGameNumbers[i]];
+            // 隨機排列形狀（包括不同顏色的目標形狀和其他形狀）
+            let shapeCards = [];
+            
+            // 添加3個目標形狀（不同顏色）
+            const targetColor = shapeColors[Math.floor(Math.random() * shapeColors.length)];
+            for (let i = 0; i < 3; i++) {
+                shapeCards.push({
+                    shape: targetShape,
+                    color: shapeColors[Math.floor(Math.random() * shapeColors.length)],
+                    isTarget: true
+                });
             }
             
-            // 設置期望的第一個數字
-            expectedNumber = 1;
-            
-            // 創建數字方塊
-            numberGameNumbers.forEach(number => {
-                const numberTile = document.createElement('button');
-                numberTile.className = 'number-tile bg-blue-100 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800';
-                numberTile.textContent = number;
+            // 添加其他形狀
+            for (let i = 0; i < 3; i++) {
+                let shape;
+                do {
+                    shape = gameShapes[Math.floor(Math.random() * gameShapes.length)];
+                } while (shape.name === targetShape.name);
                 
-                numberTile.addEventListener('click', function() {
-                    if (!numberGameActive) return;
+                shapeCards.push({
+                    shape: shape,
+                    color: shapeColors[Math.floor(Math.random() * shapeColors.length)],
+                    isTarget: false
+                });
+            }
+            
+            // 洗牌算法
+            for (let i = shapeCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shapeCards[i], shapeCards[j]] = [shapeCards[j], shapeCards[i]];
+            }
+            
+            // 創建形狀卡片
+            shapeCards.forEach(card => {
+                const shapeCard = document.createElement('div');
+                shapeCard.className = 'shape-card bg-white dark:bg-gray-700 shadow-md';
+                shapeCard.innerHTML = `
+                    <div class="shape-container">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" style="color: ${card.color};">
+                            ${card.shape.svg}
+                        </svg>
+                    </div>
+                `;
+                
+                shapeCard.addEventListener('click', function() {
+                    if (!shapeGameActive) return;
                     
-                    if (parseInt(this.textContent) === expectedNumber) {
-                        // 正確點擊
-                        this.classList.remove('bg-blue-100', 'dark:bg-blue-900');
-                        this.classList.add('bg-green-200', 'dark:bg-green-800', 'pointer-events-none');
+                    if (card.isTarget) {
+                        // 正確匹配
+                        shapeGameScore++;
+                        document.getElementById('shapeGameScore').textContent = shapeGameScore;
                         
-                        expectedNumber++;
-                        
-                        // 檢查是否完成當前等級
-                        if (expectedNumber > maxNumber) {
-                            // 等級完成
-                            const statusEl = document.getElementById('numberGameStatus');
-                            statusEl.textContent = '等級完成！';
+                        // 視覺反饋
+                        this.classList.add('bg-green-100', 'dark:bg-green-900');
+                        setTimeout(() => {
+                            // 顯示成功訊息
+                            const statusEl = document.getElementById('shapeGameStatus');
+                            statusEl.textContent = '匹配正確！';
+                            statusEl.classList.remove('hidden', 'text-red-500');
+                            statusEl.classList.add('text-green-500');
                             statusEl.classList.remove('hidden');
                             
                             setTimeout(() => {
                                 statusEl.classList.add('hidden');
-                                numberGameLevel++;
-                                document.getElementById('numberGameLevel').textContent = numberGameLevel;
-                                createNumberGame();
-                            }, 1500);
-                        }
+                                // 重新初始化遊戲
+                                initShapeGame();
+                            }, 1000);
+                        }, 300);
                     } else {
-                        // 錯誤點擊
-                        this.classList.add('bg-red-200', 'dark:bg-red-800');
+                        // 錯誤匹配
+                        this.classList.add('bg-red-100', 'dark:bg-red-900');
                         setTimeout(() => {
-                            this.classList.remove('bg-red-200', 'dark:bg-red-800');
-                            this.classList.add('bg-blue-100', 'dark:bg-blue-900');
+                            this.classList.remove('bg-red-100', 'dark:bg-red-900');
+                            
+                            // 顯示錯誤訊息
+                            const statusEl = document.getElementById('shapeGameStatus');
+                            statusEl.textContent = '形狀不匹配！';
+                            statusEl.classList.remove('hidden', 'text-green-500');
+                            statusEl.classList.add('text-red-500');
+                            statusEl.classList.remove('hidden');
+                            
+                            setTimeout(() => {
+                                statusEl.classList.add('hidden');
+                            }, 1000);
                         }, 300);
                     }
                 });
                 
-                grid.appendChild(numberTile);
+                grid.appendChild(shapeCard);
             });
-            
-            // 調整網格基於數字數量
-            if (maxNumber <= 4) {
-                grid.className = 'grid grid-cols-2 gap-3 mb-6';
-            } else if (maxNumber <= 9) {
-                grid.className = 'grid grid-cols-3 gap-3 mb-6';
-            } else {
-                grid.className = 'grid grid-cols-4 gap-3 mb-6';
-            }
         }
         
-        function startNumberGame() {
+        function startShapeGame() {
             // 重置遊戲
-            numberGameLevel = 1;
-            document.getElementById('numberGameLevel').textContent = '1';
-            document.getElementById('numberGameStatus').classList.add('hidden');
+            shapeGameScore = 0;
+            document.getElementById('shapeGameScore').textContent = '0';
+            document.getElementById('shapeGameStatus').classList.add('hidden');
             
-            // 創建遊戲
-            createNumberGame();
+            // 初始化遊戲
+            initShapeGame();
             
-            // 激活遊戲
-            numberGameActive = true;
-            document.getElementById('startNumberGameBtn').textContent = '重新開始';
+            // 啟動遊戲
+            shapeGameActive = true;
+            document.getElementById('startShapeGameBtn').textContent = '重新開始';
         }
         
-        // 設置數字遊戲開始按鈕
-        document.getElementById('startNumberGameBtn').addEventListener('click', startNumberGame);
+        // 設置形狀遊戲開始按鈕
+        document.getElementById('startShapeGameBtn').addEventListener('click', startShapeGame);
         
         // 呼吸練習遊戲功能
         let breathingInterval;
