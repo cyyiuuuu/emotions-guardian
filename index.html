@@ -275,6 +275,118 @@
         .dark .music-type.active:hover {
             background-color: #5d91b8;
         }
+        
+        /* 文件上傳樣式 */
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-upload input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: pointer;
+            display: block;
+        }
+        
+        /* 餐廳地圖標記樣式 */
+        .map-marker {
+            width: 30px;
+            height: 30px;
+            background-color: #78aed5;
+            border-radius: 50% 50% 50% 0;
+            position: absolute;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-marker:hover {
+            transform: rotate(-45deg) scale(1.2);
+        }
+        
+        .map-marker::after {
+            content: '';
+            width: 14px;
+            height: 14px;
+            margin: 8px 0 0 8px;
+            background-color: white;
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        .restaurant-card {
+            transition: all 0.3s ease;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 上传和移除按钮 */
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .uploaded-file {
+            display: flex;
+            align-items: center;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dark .uploaded-file {
+            background-color: #374151;
+        }
+        
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .playlist-item:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .dark .playlist-item:hover {
+            background-color: #4b5563;
+        }
+        
+        .playlist-item.active {
+            background-color: #dbeafe;
+        }
+        
+        .dark .playlist-item.active {
+            background-color: #1e3a8a;
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
@@ -293,7 +405,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>
-                        <span class="text-lg font-bold">音樂與白噪音</span>
+                        <span class="text-lg font-bold">嘈音消除</span>
                     </button>
                 </div>
                 
@@ -350,7 +462,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">音樂與白噪音</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">嘈音消除</h2>
                 </div>
                 
                 <div class="mb-8">
@@ -359,6 +471,32 @@
                         連接藍牙耳機
                     </button>
                     <p id="headphoneStatus" class="mt-2 text-gray-500 dark:text-gray-400">未連接</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-2">上傳您的音樂</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">上傳您喜歡的音樂，在情緒不穩定時自動播放</p>
+                    
+                    <div class="upload-btn-wrapper mb-4">
+                        <button class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition w-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            選擇音樂檔案 (.mp3)
+                        </button>
+                        <input type="file" id="musicUpload" accept="audio/mp3" multiple />
+                    </div>
+                    
+                    <div id="uploadedFiles" class="mb-4">
+                        <!-- 上傳的檔案會顯示在這裡 -->
+                    </div>
+                    
+                    <div id="userPlaylist" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-4">
+                        <h4 class="font-medium mb-2">我的音樂</h4>
+                        <div id="userPlaylistItems" class="max-h-40 overflow-y-auto">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-2">尚未上傳音樂</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="mb-8">
@@ -520,12 +658,16 @@
                     <h3 class="text-lg font-semibold mb-4">自動處理</h3>
                     <div class="space-y-4">
                         <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                            <input type="checkbox" id="autoPlayMusic" class="mr-3 h-5 w-5 accent-primary">
+                            <input type="checkbox" id="autoPlayMusic" class="mr-3 h-5 w-5 accent-primary" checked>
                             <label for="autoPlayMusic" class="text-lg">情緒波動時自動播放音樂</label>
                         </div>
                         <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                             <input type="checkbox" id="notifyStaff" class="mr-3 h-5 w-5 accent-primary">
                             <label for="notifyStaff" class="text-lg">持續情緒不穩時通知車站職員</label>
+                        </div>
+                        <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <input type="checkbox" id="contactEmergency" class="mr-3 h-5 w-5 accent-primary" checked>
+                            <label for="contactEmergency" class="text-lg">持續情緒不穩時聯絡緊急聯絡人</label>
                         </div>
                     </div>
                 </div>
@@ -616,7 +758,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">友善餐廳</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">自閉症友善餐廳</h2>
                 </div>
                 
                 <div class="mb-6">
@@ -635,6 +777,53 @@
                     </div>
                 </div>
                 
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">搜尋餐廳</h3>
+                    <div class="flex mb-3">
+                        <input type="text" id="searchRestaurant" class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="輸入餐廳名稱...">
+                        <button id="searchBtn" class="bg-primary text-white py-3 px-4 rounded-lg ml-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 監護人模式控制 -->
+                <div id="guardianControls" class="mb-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-semibold">監護人模式</h3>
+                        <button id="toggleGuardianMode" class="bg-primary text-white py-1 px-3 rounded-lg text-sm">
+                            進入監護人模式
+                        </button>
+                    </div>
+                    <div id="guardianModePanel" class="hidden">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">添加常去餐廳</label>
+                            <div class="flex">
+                                <input type="text" id="newRestaurantName" class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="輸入餐廳名稱">
+                                <button id="addRestaurantBtn" class="bg-primary text-white py-2 px-4 rounded-lg ml-2">
+                                    添加
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-medium mb-2">已添加的餐廳</h4>
+                            <div id="favoriteRestaurants" class="max-h-40 overflow-y-auto space-y-2">
+                                <!-- 管理現有餐廳 -->
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-medium mb-2">推薦餐廳</h4>
+                            <div id="recommendedRestaurants" class="max-h-40 overflow-y-auto space-y-2">
+                                <!-- 推薦餐廳列表 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div>
                     <h3 class="text-lg font-semibold mb-4">附近餐廳</h3>
                     <div id="map" class="w-full h-64 bg-gray-200 rounded-lg mb-6 relative overflow-hidden">
@@ -647,50 +836,77 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <div class="absolute top-1/4 left-1/3 w-8 h-8 bg-primary rounded-full"></div>
-                                <div class="absolute top-2/3 left-2/3 w-8 h-8 bg-primary rounded-full"></div>
-                                <div class="absolute top-1/2 right-1/4 w-8 h-8 bg-primary rounded-full"></div>
+                                <!-- 餐廳標記將由 JavaScript 動態添加 -->
                             </div>
                         </div>
                     </div>
                     
-                    <div class="space-y-4">
-                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
-                            <h4 class="font-semibold text-lg">寧靜咖啡屋</h4>
-                            <p class="text-gray-600 dark:text-gray-300">旺角彌敦道610號 - 步行5分鐘</p>
-                            <div class="flex mt-3 flex-wrap">
-                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">低噪音環境</span>
-                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">專業培訓員工</span>
-                            </div>
-                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
-                                前往路線
-                            </button>
-                        </div>
-                        
-                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
-                            <h4 class="font-semibold text-lg">和諧餐廳</h4>
-                            <p class="text-gray-600 dark:text-gray-300">旺角花園街123號 - 步行7分鐘</p>
-                            <div class="flex mt-3 flex-wrap">
-                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">安靜區域</span>
-                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">視覺菜單</span>
-                            </div>
-                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
-                                前往路線
-                            </button>
-                        </div>
-                        
-                        <div class="bg-secondary dark:bg-blue-900 rounded-lg p-5">
-                            <h4 class="font-semibold text-lg">友善食坊</h4>
-                            <p class="text-gray-600 dark:text-gray-300">旺角西洋菜南街456號 - 步行10分鐘</p>
-                            <div class="flex mt-3 flex-wrap">
-                                <span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">無障礙設施</span>
-                                <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200 mr-2 mb-2">無麩質選項</span>
-                            </div>
-                            <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full">
-                                前往路線
-                            </button>
-                        </div>
+                    <div id="restaurantsList" class="space-y-4">
+                        <!-- 餐廳列表由 JavaScript 動態生成 -->
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 餐廳詳細資訊頁面 -->
+        <div id="restaurantDetailPage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="restaurantDetailBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300" id="restaurantDetailName">餐廳名稱</h2>
+                </div>
+                
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
+                    <div class="flex items-start mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <p id="restaurantDetailAddress" class="text-gray-700 dark:text-gray-300">餐廳地址</p>
+                    </div>
+                    <div class="flex items-start mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p id="restaurantDetailHours" class="text-gray-700 dark:text-gray-300">營業時間</p>
+                    </div>
+                    <div class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <p id="restaurantDetailPhone" class="text-gray-700 dark:text-gray-300">電話</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">友善特點</h3>
+                    <div id="restaurantDetailFeatures" class="flex flex-wrap gap-2">
+                        <!-- 由 JavaScript 動態生成特點標籤 -->
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">餐廳介紹</h3>
+                    <p id="restaurantDetailDescription" class="text-gray-700 dark:text-gray-300">餐廳描述</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button id="restaurantCallBtn" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        撥打電話
+                    </button>
+                    <button id="restaurantNavigateBtn" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                        導航前往
+                    </button>
                 </div>
             </div>
         </div>
@@ -721,7 +937,7 @@
                         </div>
                         <div class="p-5">
                             <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">顏色配對遊戲</h3>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標顏色相同的方塊，訓練反應和專注力</p>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標顏色相同的方塊，訓練反應速度和專注力</p>
                             <button id="startColorGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
                                 開始遊戲
                             </button>
@@ -944,15 +1160,15 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-gray-700 dark:text-gray-300 mb-2">聯絡人姓名</label>
-                            <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人姓名">
+                            <input type="text" id="emergencyContactName" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人姓名">
                         </div>
                         <div>
                             <label class="block text-gray-700 dark:text-gray-300 mb-2">聯絡人電話</label>
-                            <input type="tel" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人電話">
+                            <input type="tel" id="emergencyContactPhone" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入聯絡人電話">
                         </div>
                         <div>
                             <label class="block text-gray-700 dark:text-gray-300 mb-2">關係</label>
-                            <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您與聯絡人的關係">
+                            <input type="text" id="emergencyContactRelation" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white text-base" placeholder="請輸入您與聯絡人的關係">
                         </div>
                     </div>
                 </div>
@@ -1020,6 +1236,7 @@
             music: document.getElementById('musicPage'),
             emotion: document.getElementById('emotionPage'),
             restaurant: document.getElementById('restaurantPage'),
+            restaurantDetail: document.getElementById('restaurantDetailPage'),
             games: document.getElementById('gamesPage'),
             colorGame: document.getElementById('colorGamePage'),
             shapeGame: document.getElementById('shapeGamePage'),
@@ -1041,6 +1258,7 @@
             music: document.getElementById('musicBackBtn'),
             emotion: document.getElementById('emotionBackBtn'),
             restaurant: document.getElementById('restaurantBackBtn'),
+            restaurantDetail: document.getElementById('restaurantDetailBackBtn'),
             games: document.getElementById('gamesBackBtn'),
             colorGame: document.getElementById('colorGameBackBtn'),
             shapeGame: document.getElementById('shapeGameBackBtn'),
@@ -1075,6 +1293,10 @@
                 backButtons[key].addEventListener('click', () => {
                     showPage('games');
                 });
+            } else if (key === 'restaurantDetail') {
+                backButtons[key].addEventListener('click', () => {
+                    showPage('restaurant');
+                });
             } else {
                 backButtons[key].addEventListener('click', () => {
                     showPage('main');
@@ -1097,6 +1319,17 @@
             showPage('breathingGame');
         });
 
+        // 情緒穩定度與波動追蹤
+        let emotionalStability = 100; // 0-100, 100 表示完全穩定
+        let unstableTimeStart = null; // 情緒不穩定的開始時間
+        const UNSTABLE_THRESHOLD = 70; // 低於此閾值被視為情緒不穩定
+        const SEVERE_THRESHOLD = 40; // 低於此閾值被視為嚴重情緒不穩定
+        const EMERGENCY_CONTACT_DELAY = 30000; // 30秒持續不穩定時聯絡緊急聯絡人
+        const AUTO_PLAY_MUSIC_DELAY = 5000; // 5秒持續不穩定時播放音樂
+        
+        let contactedEmergency = false; // 是否已聯絡緊急聯絡人
+        let autoMusicPlayed = false; // 是否已自動播放音樂
+        
         // 模擬心跳數據
         function simulateHeartRate() {
             const heartRateEl = document.getElementById('heartRate');
@@ -1118,32 +1351,107 @@
                 rate = Math.floor(Math.random() * 30) + 85;
                 heartRateEl.textContent = rate;
                 
-                if (document.getElementById('autoPlayMusic').checked && pages.emotion.classList.contains('active')) {
-                    // 顯示通知
-                    const notification = document.createElement('div');
-                    notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center';
-                    notification.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                        檢測到情緒波動，正在播放舒緩音樂
-                    `;
-                    document.body.appendChild(notification);
-                    
-                    // 3秒後移除通知
-                    setTimeout(() => {
-                        notification.classList.add('opacity-0');
-                        setTimeout(() => notification.remove(), 500);
-                    }, 3000);
-                    
-                    // 自動跳轉到音樂頁面
-                    setTimeout(() => {
-                        showPage('music');
-                    }, 1500);
+                // 降低情緒穩定度
+                emotionalStability = Math.max(20, emotionalStability - Math.floor(Math.random() * 40) - 20);
+                
+                // 檢查情緒不穩定
+                checkEmotionalInstability();
+            } else {
+                // 逐漸恢復情緒穩定度
+                emotionalStability = Math.min(100, emotionalStability + 1);
+                
+                // 如果恢復穩定，重置不穩定計時
+                if (emotionalStability > UNSTABLE_THRESHOLD) {
+                    unstableTimeStart = null;
+                    contactedEmergency = false;
+                    autoMusicPlayed = false;
                 }
             }
             
             setTimeout(simulateHeartRate, 2000);
+        }
+        
+        // 檢查情緒不穩定狀態並採取行動
+        function checkEmotionalInstability() {
+            // 如果情緒降至不穩定閾值以下
+            if (emotionalStability < UNSTABLE_THRESHOLD) {
+                // 如果這是剛開始不穩定，記錄時間
+                if (unstableTimeStart === null) {
+                    unstableTimeStart = Date.now();
+                }
+                
+                const unstableDuration = Date.now() - unstableTimeStart;
+                
+                // 自動播放音樂
+                if (!autoMusicPlayed && document.getElementById('autoPlayMusic').checked && unstableDuration > AUTO_PLAY_MUSIC_DELAY) {
+                    autoPlayMusic();
+                    autoMusicPlayed = true;
+                }
+                
+                // 情緒嚴重不穩定且持續超過指定時間
+                if (!contactedEmergency && document.getElementById('contactEmergency').checked && 
+                    emotionalStability < SEVERE_THRESHOLD && unstableDuration > EMERGENCY_CONTACT_DELAY) {
+                    contactEmergencyPerson();
+                    contactedEmergency = true;
+                }
+            }
+        }
+        
+        // 自動播放音樂功能
+        function autoPlayMusic() {
+            // 顯示通知
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center';
+            notification.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                檢測到情緒波動，正在播放舒緩音樂
+            `;
+            document.body.appendChild(notification);
+            
+            // 3秒後移除通知
+            setTimeout(() => {
+                notification.classList.add('opacity-0');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+            
+            // 自動跳轉到音樂頁面
+            setTimeout(() => {
+                showPage('music');
+                
+                // 播放用戶上傳的音樂（如果有）或者默認音樂
+                if (userUploadedFiles.length > 0) {
+                    playUserMusic(0);
+                } else {
+                    // 播放默認音樂
+                    loadAudio(audioFiles[0].url, audioFiles[0].name);
+                }
+            }, 1500);
+        }
+        
+        // 聯絡緊急聯絡人功能
+        function contactEmergencyPerson() {
+            // 獲取緊急聯絡人信息
+            const contactName = document.getElementById('emergencyContactName').value || "緊急聯絡人";
+            const contactPhone = document.getElementById('emergencyContactPhone').value || "未設置";
+            
+            // 顯示聯絡通知
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center';
+            notification.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+                </svg>
+                正在聯絡${contactName}(${contactPhone})...
+            `;
+            document.body.appendChild(notification);
+            
+            // 5秒後移除通知
+            setTimeout(() => {
+                notification.classList.add('opacity-0');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
         }
         
         // 啟動心跳模擬
@@ -1193,6 +1501,126 @@
             }
         });
         
+        // 用戶音樂上傳功能
+        const userUploadedFiles = [];
+        
+        document.getElementById('musicUpload').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (!files.length) return;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // 只接受 MP3 文件
+                if (file.type !== 'audio/mp3' && !file.name.endsWith('.mp3')) {
+                    alert(`${file.name} 不是有效的 MP3 文件。`);
+                    continue;
+                }
+                
+                // 創建文件 URL
+                const fileUrl = URL.createObjectURL(file);
+                
+                // 保存文件信息
+                userUploadedFiles.push({
+                    name: file.name,
+                    url: fileUrl,
+                    isUserFile: true
+                });
+                
+                // 更新已上傳文件顯示
+                updateUploadedFilesList();
+                
+                // 更新播放列表
+                updateUserPlaylist();
+            }
+            
+            // 清除文件選擇，允許再次選擇相同文件
+            this.value = '';
+        });
+        
+        // 更新已上傳文件列表
+        function updateUploadedFilesList() {
+            const container = document.getElementById('uploadedFiles');
+            container.innerHTML = '';
+            
+            if (userUploadedFiles.length === 0) {
+                return;
+            }
+            
+            userUploadedFiles.forEach((file, index) => {
+                const fileEl = document.createElement('div');
+                fileEl.className = 'uploaded-file';
+                fileEl.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                    </svg>
+                    <span class="flex-1 truncate">${file.name}</span>
+                    <button class="text-red-500 hover:text-red-700 p-1" data-index="${index}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                `;
+                
+                container.appendChild(fileEl);
+                
+                // 添加刪除按鈕事件
+                const deleteBtn = fileEl.querySelector('button');
+                deleteBtn.addEventListener('click', function() {
+                    const fileIndex = parseInt(this.dataset.index);
+                    // 釋放文件 URL 對象
+                    URL.revokeObjectURL(userUploadedFiles[fileIndex].url);
+                    // 從列表中移除
+                    userUploadedFiles.splice(fileIndex, 1);
+                    // 更新顯示
+                    updateUploadedFilesList();
+                    updateUserPlaylist();
+                });
+            });
+        }
+        
+        // 更新用戶播放列表
+        function updateUserPlaylist() {
+            const container = document.getElementById('userPlaylistItems');
+            container.innerHTML = '';
+            
+            if (userUploadedFiles.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-sm text-center py-2">尚未上傳音樂</p>';
+                return;
+            }
+            
+            userUploadedFiles.forEach((file, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'playlist-item';
+                itemEl.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                    </svg>
+                    <span class="flex-1 truncate">${file.name}</span>
+                    <button class="text-primary p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        </svg>
+                    </button>
+                `;
+                
+                container.appendChild(itemEl);
+                
+                // 添加播放按鈕事件
+                itemEl.addEventListener('click', function() {
+                    playUserMusic(index);
+                });
+            });
+        }
+        
+        // 播放用戶音樂
+        function playUserMusic(index) {
+            if (index >= 0 && index < userUploadedFiles.length) {
+                const file = userUploadedFiles[index];
+                loadAudio(file.url, file.name);
+            }
+        }
+        
         // 音訊處理相關功能
         const audioPlayer = document.getElementById('audioPlayer');
         const volumeControl = document.getElementById('volumeControl');
@@ -1226,6 +1654,7 @@
         let audioContext = null;
         let sourceNode = null;
         let gainNode = null;
+        let isUserMusic = false; // 是否正在播放用戶上傳的音樂
         
         // 初始化音頻播放器
         function initAudioPlayer() {
@@ -1319,13 +1748,20 @@
                 audioPlayer.play();
             } else if (isShuffle) {
                 // 隨機播放
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * audioFiles.length);
-                } while (randomIndex === currentAudioIndex && audioFiles.length > 1);
-                
-                currentAudioIndex = randomIndex;
-                loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+                if (isUserMusic && userUploadedFiles.length > 0) {
+                    // 從用戶上傳的音樂中隨機播放
+                    const randomIndex = Math.floor(Math.random() * userUploadedFiles.length);
+                    playUserMusic(randomIndex);
+                } else if (!isUserMusic && audioFiles.length > 0) {
+                    // 從預設音樂中隨機播放
+                    let randomIndex;
+                    do {
+                        randomIndex = Math.floor(Math.random() * audioFiles.length);
+                    } while (randomIndex === currentAudioIndex && audioFiles.length > 1);
+                    
+                    currentAudioIndex = randomIndex;
+                    loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+                }
             } else {
                 // 播放下一首
                 playNext();
@@ -1334,14 +1770,30 @@
         
         // 播放前一首
         function playPrevious() {
-            currentAudioIndex = (currentAudioIndex - 1 + audioFiles.length) % audioFiles.length;
-            loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+            if (isUserMusic && userUploadedFiles.length > 0) {
+                // 用戶音樂
+                const currentIndex = userUploadedFiles.findIndex(file => file.url === audioPlayer.src);
+                const prevIndex = (currentIndex > 0) ? currentIndex - 1 : userUploadedFiles.length - 1;
+                playUserMusic(prevIndex);
+            } else {
+                // 預設音樂
+                currentAudioIndex = (currentAudioIndex - 1 + audioFiles.length) % audioFiles.length;
+                loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+            }
         }
         
         // 播放下一首
         function playNext() {
-            currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
-            loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+            if (isUserMusic && userUploadedFiles.length > 0) {
+                // 用戶音樂
+                const currentIndex = userUploadedFiles.findIndex(file => file.url === audioPlayer.src);
+                const nextIndex = (currentIndex < userUploadedFiles.length - 1) ? currentIndex + 1 : 0;
+                playUserMusic(nextIndex);
+            } else {
+                // 預設音樂
+                currentAudioIndex = (currentAudioIndex + 1) % audioFiles.length;
+                loadAudio(audioFiles[currentAudioIndex].url, audioFiles[currentAudioIndex].name);
+            }
         }
         
         // 切換循環狀態
@@ -1360,6 +1812,9 @@
         
         // 加載音頻
         function loadAudio(url, title) {
+            // 檢查是否為用戶音樂
+            isUserMusic = userUploadedFiles.some(file => file.url === url);
+            
             audioPlayer.src = url;
             nowPlayingTitle.textContent = title;
             
@@ -1416,6 +1871,440 @@
                     loadAudio(soundUrl, soundName);
                 }
             });
+        });
+        
+        // 餐廳數據和功能
+        const restaurants = [
+            {
+                id: 1,
+                name: "寧靜咖啡屋",
+                address: "旺角彌敦道610號",
+                location: { lat: 22.3186, lng: 114.1701 },
+                distance: "5分鐘",
+                features: ["低噪音環境", "專業培訓員工"],
+                description: "寧靜咖啡屋提供一個安靜舒適的環境，服務員經過專業培訓，了解如何為自閉症患者提供適當的服務。",
+                phone: "2345-6789",
+                hours: "週一至週日: 08:00 - 21:00",
+                branches: ["銅鑼灣", "尖沙咀", "元朗"]
+            },
+            {
+                id: 2,
+                name: "和諧餐廳",
+                address: "旺角花園街123號",
+                location: { lat: 22.3167, lng: 114.1735 },
+                distance: "7分鐘",
+                features: ["安靜區域", "視覺菜單"],
+                description: "和諧餐廳設有特別的安靜區域，並且提供視覺菜單，方便自閉症患者點餐和享用餐點。",
+                phone: "3456-7890",
+                hours: "週一至週日: 11:00 - 22:00",
+                branches: ["沙田", "太古"]
+            },
+            {
+                id: 3,
+                name: "友善食坊",
+                address: "旺角西洋菜南街456號",
+                location: { lat: 22.3178, lng: 114.1693 },
+                distance: "10分鐘",
+                features: ["無障礙設施", "無麩質選項"],
+                description: "友善食坊特別為有特殊需求的顧客設計，提供無障礙設施和多種無麩質食品選擇。",
+                phone: "4567-8901",
+                hours: "週二至週日: 10:00 - 20:00",
+                branches: ["觀塘", "將軍澳"]
+            }
+        ];
+        
+        // 用戶收藏的餐廳
+        let favoriteRestaurants = [];
+        
+        // 推薦的餐廳
+        let recommendedRestaurants = [
+            {
+                id: 101,
+                name: "靜謐茶館",
+                address: "中環皇后大道10號",
+                features: ["低光環境", "隔音設計"],
+                added: false
+            },
+            {
+                id: 102,
+                name: "特色素食餐廳",
+                address: "尖沙咀廣東道88號",
+                features: ["特殊飲食選項", "安靜環境"],
+                added: false
+            },
+            {
+                id: 103,
+                name: "家庭友善餐廳",
+                address: "銅鑼灣怡和街33號",
+                features: ["兒童友善", "明確的視覺指引"],
+                added: false
+            }
+        ];
+        
+        // 初始化餐廳功能
+        function initRestaurantFeatures() {
+            // 渲染餐廳列表
+            renderRestaurantsList();
+            
+            // 渲染收藏餐廳
+            renderFavoriteRestaurants();
+            
+            // 渲染推薦餐廳
+            renderRecommendedRestaurants();
+            
+            // 添加監護人模式切換
+            document.getElementById('toggleGuardianMode').addEventListener('click', function() {
+                const panel = document.getElementById('guardianModePanel');
+                if (panel.classList.contains('hidden')) {
+                    panel.classList.remove('hidden');
+                    this.textContent = '退出監護人模式';
+                } else {
+                    panel.classList.add('hidden');
+                    this.textContent = '進入監護人模式';
+                }
+            });
+            
+            // 添加新餐廳
+            document.getElementById('addRestaurantBtn').addEventListener('click', function() {
+                const restaurantName = document.getElementById('newRestaurantName').value.trim();
+                if (!restaurantName) {
+                    alert('請輸入餐廳名稱');
+                    return;
+                }
+                
+                // 檢查是否已存在
+                if (favoriteRestaurants.some(r => r.name === restaurantName)) {
+                    alert('此餐廳已在收藏列表中');
+                    return;
+                }
+                
+                // 添加到收藏
+                const newRestaurant = {
+                    id: Date.now(),
+                    name: restaurantName,
+                    address: "自定義地址",
+                    branches: []
+                };
+                
+                favoriteRestaurants.push(newRestaurant);
+                renderFavoriteRestaurants();
+                
+                // 清空輸入框
+                document.getElementById('newRestaurantName').value = '';
+                
+                // 生成推薦（模擬）
+                generateRecommendations(newRestaurant.name);
+            });
+            
+            // 搜尋餐廳
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchRestaurant').value.trim().toLowerCase();
+                if (!searchTerm) return;
+                
+                const allRestaurants = [...restaurants, ...favoriteRestaurants];
+                const found = allRestaurants.find(r => r.name.toLowerCase().includes(searchTerm));
+                
+                if (found) {
+                    showRestaurantDetail(found);
+                } else {
+                    alert('找不到符合的餐廳');
+                }
+            });
+        }
+        
+        // 渲染餐廳列表
+        function renderRestaurantsList() {
+            const container = document.getElementById('restaurantsList');
+            container.innerHTML = '';
+            
+            // 渲染所有餐廳
+            const allRestaurants = [...restaurants, ...favoriteRestaurants.filter(fr => 
+                !restaurants.some(r => r.name === fr.name)
+            )];
+            
+            // 根據當前位置篩選餐廳（模擬）
+            const currentLocation = document.getElementById('currentLocation').textContent;
+            const filteredRestaurants = allRestaurants.filter(r => {
+                // 檢查是否有分店在當前位置
+                if (r.branches && r.branches.some(b => currentLocation.includes(b))) {
+                    return true;
+                }
+                // 或者餐廳本身在當前位置
+                return r.address.includes(currentLocation) || currentLocation.includes(r.address);
+            });
+            
+            if (filteredRestaurants.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">附近沒有發現友善餐廳</p>';
+                return;
+            }
+            
+            // 渲染餐廳卡片
+            filteredRestaurants.forEach(restaurant => {
+                const card = document.createElement('div');
+                card.className = 'restaurant-card bg-secondary dark:bg-blue-900 rounded-lg p-5 shadow-md';
+                card.innerHTML = `
+                    <h4 class="font-semibold text-lg">${restaurant.name}</h4>
+                    <p class="text-gray-600 dark:text-gray-300">${restaurant.address || '詳細地址未提供'} - ${restaurant.distance || '距離未知'}</p>
+                    <div class="flex mt-3 flex-wrap">
+                        ${(restaurant.features || []).map(feature => 
+                            `<span class="bg-green-100 text-green-800 text-sm px-2 py-1 rounded dark:bg-green-900 dark:text-green-200 mr-2 mb-2">${feature}</span>`
+                        ).join('')}
+                    </div>
+                    <button class="mt-3 bg-primary text-white py-2 px-4 rounded-lg w-full hover:bg-blue-400 transition">
+                        查看詳情
+                    </button>
+                `;
+                
+                container.appendChild(card);
+                
+                // 添加點擊事件
+                card.querySelector('button').addEventListener('click', () => {
+                    showRestaurantDetail(restaurant);
+                });
+                
+                // 添加餐廳標記到地圖
+                if (restaurant.location) {
+                    addRestaurantMarker(restaurant);
+                }
+            });
+        }
+        
+        // 添加餐廳標記到地圖
+        function addRestaurantMarker(restaurant) {
+            if (!restaurant.location) return;
+            
+            const map = document.getElementById('map');
+            const mapWidth = map.clientWidth;
+            const mapHeight = map.clientHeight;
+            
+            // 計算模擬位置（實際應用中應使用真實經緯度轉換）
+            const x = mapWidth * (0.3 + Math.random() * 0.4); // 隨機位置
+            const y = mapHeight * (0.3 + Math.random() * 0.4); // 隨機位置
+            
+            const marker = document.createElement('div');
+            marker.className = 'map-marker';
+            marker.style.left = `${x}px`;
+            marker.style.top = `${y}px`;
+            marker.setAttribute('data-restaurant-id', restaurant.id);
+            
+            map.appendChild(marker);
+            
+            // 添加點擊事件
+            marker.addEventListener('click', () => {
+                showRestaurantDetail(restaurant);
+            });
+        }
+        
+        // 顯示餐廳詳情
+        function showRestaurantDetail(restaurant) {
+            // 填充餐廳詳情
+            document.getElementById('restaurantDetailName').textContent = restaurant.name;
+            document.getElementById('restaurantDetailAddress').textContent = restaurant.address || '地址未提供';
+            document.getElementById('restaurantDetailHours').textContent = restaurant.hours || '營業時間未提供';
+            document.getElementById('restaurantDetailPhone').textContent = restaurant.phone || '電話未提供';
+            
+            // 清空並填充特點標籤
+            const featuresContainer = document.getElementById('restaurantDetailFeatures');
+            featuresContainer.innerHTML = '';
+            
+            if (restaurant.features && restaurant.features.length > 0) {
+                restaurant.features.forEach(feature => {
+                    const featureTag = document.createElement('span');
+                    featureTag.className = 'bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200';
+                    featureTag.textContent = feature;
+                    featuresContainer.appendChild(featureTag);
+                });
+            } else {
+                featuresContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">沒有特點資訊</p>';
+            }
+            
+            // 設置餐廳描述
+            document.getElementById('restaurantDetailDescription').textContent = restaurant.description || '沒有詳細描述';
+            
+            // 設置操作按鈕
+            const callBtn = document.getElementById('restaurantCallBtn');
+            const navigateBtn = document.getElementById('restaurantNavigateBtn');
+            
+            callBtn.onclick = () => {
+                if (restaurant.phone) {
+                    alert(`準備撥打電話至: ${restaurant.phone}`);
+                } else {
+                    alert('沒有提供電話號碼');
+                }
+            };
+            
+            navigateBtn.onclick = () => {
+                alert(`準備導航至: ${restaurant.name} (${restaurant.address})`);
+            };
+            
+            // 顯示詳情頁面
+            showPage('restaurantDetail');
+        }
+        
+        // 渲染收藏餐廳列表
+        function renderFavoriteRestaurants() {
+            const container = document.getElementById('favoriteRestaurants');
+            container.innerHTML = '';
+            
+            if (favoriteRestaurants.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-sm text-center py-2">尚未添加常去餐廳</p>';
+                return;
+            }
+            
+            favoriteRestaurants.forEach((restaurant, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded-lg';
+                item.innerHTML = `
+                    <span class="flex-1">${restaurant.name}</span>
+                    <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 add-branch-btn" data-index="${index}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                    <button class="text-red-500 hover:text-red-700 p-1 remove-restaurant-btn" data-index="${index}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                `;
+                
+                container.appendChild(item);
+                
+                // 添加刪除按鈕事件
+                item.querySelector('.remove-restaurant-btn').addEventListener('click', function() {
+                    const restaurantIndex = parseInt(this.dataset.index);
+                    favoriteRestaurants.splice(restaurantIndex, 1);
+                    renderFavoriteRestaurants();
+                    renderRestaurantsList();
+                });
+                
+                // 添加分店按鈕事件
+                item.querySelector('.add-branch-btn').addEventListener('click', function() {
+                    const restaurantIndex = parseInt(this.dataset.index);
+                    const branch = prompt('請輸入分店地區 (例如: 旺角, 銅鑼灣)');
+                    
+                    if (branch && branch.trim()) {
+                        if (!favoriteRestaurants[restaurantIndex].branches) {
+                            favoriteRestaurants[restaurantIndex].branches = [];
+                        }
+                        
+                        favoriteRestaurants[restaurantIndex].branches.push(branch.trim());
+                        alert(`已添加 ${favoriteRestaurants[restaurantIndex].name} 的 ${branch.trim()} 分店`);
+                        renderRestaurantsList();
+                    }
+                });
+                
+                // 顯示分店（如果有）
+                if (restaurant.branches && restaurant.branches.length > 0) {
+                    const branchesContainer = document.createElement('div');
+                    branchesContainer.className = 'mt-1 ml-4 space-y-1';
+                    
+                    restaurant.branches.forEach(branch => {
+                        const branchItem = document.createElement('div');
+                        branchItem.className = 'flex items-center text-sm text-gray-500 dark:text-gray-400';
+                        branchItem.innerHTML = `
+                            <span class="mr-1">•</span>
+                            <span>${branch}</span>
+                        `;
+                        branchesContainer.appendChild(branchItem);
+                    });
+                    
+                    item.insertAdjacentElement('afterend', branchesContainer);
+                }
+            });
+        }
+        
+        // 渲染推薦餐廳
+        function renderRecommendedRestaurants() {
+            const container = document.getElementById('recommendedRestaurants');
+            container.innerHTML = '';
+            
+            if (recommendedRestaurants.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-sm text-center py-2">沒有推薦餐廳</p>';
+                return;
+            }
+            
+            // 只顯示未被添加的推薦
+            const filteredRecommendations = recommendedRestaurants.filter(r => !r.added);
+            
+            if (filteredRecommendations.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-sm text-center py-2">沒有新的推薦餐廳</p>';
+                return;
+            }
+            
+            filteredRecommendations.forEach((restaurant, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-2 rounded-lg';
+                item.innerHTML = `
+                    <div class="flex-1">
+                        <div class="font-medium">${restaurant.name}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">${restaurant.address}</div>
+                        <div class="flex mt-1 flex-wrap">
+                            ${(restaurant.features || []).map(feature => 
+                                `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-200 mr-2 mb-1">${feature}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-blue-700 p-1 add-recommendation-btn" data-index="${index}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                `;
+                
+                container.appendChild(item);
+                
+                // 添加按鈕事件
+                item.querySelector('.add-recommendation-btn').addEventListener('click', function() {
+                    const recommendationIndex = parseInt(this.dataset.index);
+                    const recommendedRestaurant = recommendedRestaurants[recommendationIndex];
+                    
+                    // 標記為已添加
+                    recommendedRestaurants[recommendationIndex].added = true;
+                    
+                    // 添加到收藏餐廳
+                    favoriteRestaurants.push({
+                        id: recommendedRestaurant.id,
+                        name: recommendedRestaurant.name,
+                        address: recommendedRestaurant.address,
+                        features: recommendedRestaurant.features,
+                        branches: []
+                    });
+                    
+                    // 更新顯示
+                    renderFavoriteRestaurants();
+                    renderRecommendedRestaurants();
+                    renderRestaurantsList();
+                });
+            });
+        }
+        
+        // 生成餐廳推薦（模擬）
+        function generateRecommendations(restaurantName) {
+            // 模擬從服務器獲取推薦
+            setTimeout(() => {
+                // 生成一個新的推薦
+                const newRecommendation = {
+                    id: 100 + Math.floor(Math.random() * 900),
+                    name: `${restaurantName}的相似餐廳`,
+                    address: ["銅鑼灣", "尖沙咀", "中環", "旺角"][Math.floor(Math.random() * 4)] + "分店",
+                    features: ["安靜環境", "無障礙設施", "特殊飲食選項", "友善員工"][Math.floor(Math.random() * 4)].split(),
+                    added: false
+                };
+                
+                recommendedRestaurants.push(newRecommendation);
+                renderRecommendedRestaurants();
+            }, 1000);
+        }
+        
+        // 更新位置按鈕
+        document.getElementById('refreshLocation').addEventListener('click', function() {
+            const locations = ['旺角站', '銅鑼灣站', '中環站', '深水埗站', '九龍灣站'];
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            document.getElementById('currentLocation').textContent = randomLocation;
+            
+            // 重新渲染餐廳列表
+            renderRestaurantsList();
         });
         
         // 顏色配對遊戲功能
@@ -2012,6 +2901,9 @@
         
         // 初始化情緒追蹤器
         initEmotionTracker();
+        
+        // 初始化餐廳功能
+        initRestaurantFeatures();
     </script>
 </body>
 </html>
