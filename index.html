@@ -387,6 +387,139 @@
         .dark .playlist-item.active {
             background-color: #1e3a8a;
         }
+        
+        /* MTR遊戲樣式 */
+        .station-tag {
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            background-color: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .dark .station-tag {
+            background-color: #4b5563;
+            color: #e5e7eb;
+        }
+        
+        .station-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .station-tag.selected {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .station-tag.selected-order {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .dark .station-tag.selected-order {
+            background-color: #1e3a8a;
+            color: #dbeafe;
+        }
+        
+        .station-tag.line-island {
+            border-left: 4px solid #0091ff;
+        }
+        
+        .station-tag.line-kwun-tong {
+            border-left: 4px solid #00a651;
+        }
+        
+        .station-tag.line-tsuen-wan {
+            border-left: 4px solid #ed1c24;
+        }
+        
+        .station-tag.line-tung-chung {
+            border-left: 4px solid #f7943e;
+        }
+        
+        .station-tag.line-east-rail {
+            border-left: 4px solid #9c27b0;
+        }
+        
+        .station-tag.correct {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .dark .station-tag.correct {
+            background-color: #166534;
+            color: #dcfce7;
+        }
+        
+        .station-tag.incorrect {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .dark .station-tag.incorrect {
+            background-color: #b91c1c;
+            color: #fee2e2;
+        }
+        
+        .line-container {
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .line-island {
+            background-color: rgba(0, 145, 255, 0.1);
+        }
+        
+        .line-kwun-tong {
+            background-color: rgba(0, 166, 81, 0.1);
+        }
+        
+        .line-tsuen-wan {
+            background-color: rgba(237, 28, 36, 0.1);
+        }
+        
+        .line-tung-chung {
+            background-color: rgba(247, 148, 62, 0.1);
+        }
+        
+        .line-east-rail {
+            background-color: rgba(156, 39, 176, 0.1);
+        }
+        
+        .dark .line-island {
+            background-color: rgba(0, 145, 255, 0.2);
+        }
+        
+        .dark .line-kwun-tong {
+            background-color: rgba(0, 166, 81, 0.2);
+        }
+        
+        .dark .line-tsuen-wan {
+            background-color: rgba(237, 28, 36, 0.2);
+        }
+        
+        .dark .line-tung-chung {
+            background-color: rgba(247, 148, 62, 0.2);
+        }
+        
+        .dark .line-east-rail {
+            background-color: rgba(156, 39, 176, 0.2);
+        }
+        
+        .points-earned {
+            animation: pointsEarned 1s ease;
+        }
+        
+        @keyframes pointsEarned {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
@@ -405,7 +538,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>
-                        <span class="text-lg font-bold">噪音消除</span>
+                        <span class="text-lg font-bold">嘈音消除</span>
                     </button>
                 </div>
                 
@@ -462,7 +595,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
                     </button>
-                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">噪音消除</h2>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">嘈音消除</h2>
                 </div>
                 
                 <div class="mb-8">
@@ -955,7 +1088,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md md:col-span-2">
+                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
                         <div class="w-full h-40 bg-gradient-to-r from-green-400 to-blue-400 flex items-center justify-center">
                             <div class="grid grid-cols-3 gap-3 p-3">
                                 <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
@@ -979,6 +1112,24 @@
                             <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">形狀匹配遊戲</h3>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">點擊與目標形狀相同的卡片，訓練視覺辨識能力</p>
                             <button id="startShapeGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
+                                開始遊戲
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-secondary dark:bg-blue-900 rounded-2xl overflow-hidden shadow-md">
+                        <div class="w-full h-40 bg-gradient-to-r from-red-400 to-yellow-400 flex items-center justify-center">
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <div class="h-10 px-3 rounded-full bg-red-500 text-white flex items-center justify-center">港島綫</div>
+                                <div class="h-10 px-3 rounded-full bg-green-500 text-white flex items-center justify-center">觀塘綫</div>
+                                <div class="h-10 px-3 rounded-full bg-blue-500 text-white flex items-center justify-center">荃灣綫</div>
+                                <div class="h-10 px-3 rounded-full bg-purple-500 text-white flex items-center justify-center">東鐵綫</div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-primary dark:text-blue-300 mb-2">港鐵車站遊戲</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">完成港鐵車站任務，獲取港鐵積分！訓練記憶力和規劃能力</p>
+                            <button id="startMTRGame" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
                                 開始遊戲
                             </button>
                         </div>
@@ -1094,6 +1245,184 @@
                     <button id="startBreathingExercise" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
                         開始練習
                     </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MTR遊戲頁面 -->
+        <div id="mtrGamePage" class="page">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-6">
+                    <button class="back-btn bg-gray-200 dark:bg-gray-700 p-2 rounded-lg mr-3" id="mtrGameBackBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary dark:text-dark-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-primary dark:text-blue-300">港鐵小遊戲</h2>
+                    <div class="ml-auto flex items-center">
+                        <span class="text-lg font-bold mr-2">積分：</span>
+                        <span id="mtrGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0</span>
+                    </div>
+                </div>
+                
+                <div id="mtrGameIntro" class="mb-8">
+                    <p class="text-lg text-center mb-6">選擇一個簡單有趣的港鐵遊戲</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- 遊戲1：尋找港鐵標誌 -->
+                        <button id="findLogoBtn" class="bg-secondary dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 transition p-4 rounded-lg flex flex-col items-center h-full">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-3 bg-red-500 flex items-center justify-center">
+                                <span class="text-white font-bold text-3xl">MTR</span>
+                            </div>
+                            <span class="font-semibold text-lg">尋找港鐵標誌</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">點擊卡片尋找港鐵標誌</p>
+                        </button>
+                        
+                        <!-- 遊戲2：列車顏色配對 -->
+                        <button id="colorMatchBtn" class="bg-secondary dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 transition p-4 rounded-lg flex flex-col items-center h-full">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-3 bg-gradient-to-r from-red-500 via-green-500 to-blue-500 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h10a2 2 0 012 2v12a4 4 0 01-4 4H7z" />
+                                </svg>
+                            </div>
+                            <span class="font-semibold text-lg">列車顏色配對</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">將列車拖到相同顏色的站點</p>
+                        </button>
+                        
+                        <!-- 遊戲3：點擊列車 -->
+                        <button id="clickTrainBtn" class="bg-secondary dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 transition p-4 rounded-lg flex flex-col items-center h-full">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-3 bg-blue-100 dark:bg-blue-800 flex items-center justify-center">
+                                <div class="w-16 h-8 bg-primary rounded-lg relative">
+                                    <div class="absolute top-1 left-1 right-1 h-3 bg-blue-200 rounded"></div>
+                                    <div class="absolute -bottom-1 left-2 w-3 h-3 bg-gray-700 rounded-full"></div>
+                                    <div class="absolute -bottom-1 right-2 w-3 h-3 bg-gray-700 rounded-full"></div>
+                                </div>
+                            </div>
+                            <span class="font-semibold text-lg">點擊列車</span>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">點擊移動中的列車獲得積分</p>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-center">完成遊戲可獲得MTR積分！</p>
+                </div>
+                
+                <!-- 遊戲1：尋找港鐵標誌 -->
+                <div id="findLogoGame" class="game-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">尋找港鐵標誌</h3>
+                        <div id="findLogoTimer" class="text-lg font-semibold">剩餘時間：15</div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">找出圖卡中的港鐵標誌，點擊它們！</p>
+                    
+                    <div id="findLogoGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                        <!-- 卡片將由 JavaScript 動態生成 -->
+                    </div>
+                    
+                    <div id="findLogoStatus" class="mb-6 text-center p-4 rounded-lg hidden"></div>
+                    
+                    <div class="text-center">
+                        <button id="startFindLogoBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
+                            開始遊戲
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 遊戲2：列車顏色配對 -->
+                <div id="colorMatchGame" class="game-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">列車顏色配對</h3>
+                        <div id="colorMatchCount" class="text-lg font-semibold">剩餘：5組</div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">請點擊相同顏色的列車和站點！</p>
+                    
+                    <div id="colorMatchStatus" class="mb-4 text-center hidden"></div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-medium mb-3 text-center">列車</h4>
+                            <div id="trainContainer" class="grid grid-cols-1 gap-3">
+                                <!-- 列車將由 JavaScript 動態生成 -->
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-3 text-center">站點</h4>
+                            <div id="stationContainer" class="grid grid-cols-1 gap-3">
+                                <!-- 站點將由 JavaScript 動態生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="startColorMatchBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
+                            開始遊戲
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 遊戲3：點擊列車 -->
+                <div id="clickTrainGame" class="game-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">點擊列車</h3>
+                        <div id="clickTrainTimer" class="text-lg font-semibold">剩餘時間：20</div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">列車會在鐵路上移動，請迅速點擊它們！</p>
+                    
+                    <div id="clickTrainStatus" class="mb-4 text-center hidden"></div>
+                    
+                    <div id="trainTrack" class="relative h-64 bg-gray-200 dark:bg-gray-700 rounded-lg mb-6 overflow-hidden p-4">
+                        <div id="rail" class="absolute top-1/2 left-0 right-0 h-4 bg-gray-400 dark:bg-gray-600 transform -translate-y-1/2"></div>
+                        <!-- 列車將由 JavaScript 動態生成 -->
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="font-medium">已點擊：<span id="trainClickCount">0</span>次</div>
+                        <div class="font-medium">目標：<span id="trainClickTarget">10</span>次</div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="startClickTrainBtn" class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-blue-400 transition text-lg">
+                            開始遊戲
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 遊戲完成界面 -->
+                <div id="gameComplete" class="hidden text-center">
+                    <div class="mb-8">
+                        <div class="w-24 h-24 bg-green-100 dark:bg-green-900 rounded-full mx-auto flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-green-500 mt-4">恭喜完成！</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2">您獲得了 <span id="earnedPoints" class="font-bold text-2xl text-primary">0</span> MTR積分！</p>
+                    </div>
+                    
+                    <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg mb-8">
+                        <h4 class="font-semibold mb-4">您的MTR積分</h4>
+                        <div class="flex items-center justify-center">
+                            <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-4 text-left">
+                                <p class="text-sm text-gray-600 dark:text-gray-400">總積分</p>
+                                <p class="text-2xl font-bold text-primary dark:text-dark-primary" id="totalPoints">0</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">積分將自動同步到您的MTR手機App</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="playAgainBtn" class="bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition">
+                            再玩一次
+                        </button>
+                        <button id="backToGamesBtn" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                            返回遊戲列表
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1241,6 +1570,7 @@
             colorGame: document.getElementById('colorGamePage'),
             shapeGame: document.getElementById('shapeGamePage'),
             breathingGame: document.getElementById('breathingGamePage'),
+            mtrGame: document.getElementById('mtrGamePage'),
             settings: document.getElementById('settingsPage')
         };
         
@@ -1263,6 +1593,7 @@
             colorGame: document.getElementById('colorGameBackBtn'),
             shapeGame: document.getElementById('shapeGameBackBtn'),
             breathingGame: document.getElementById('breathingGameBackBtn'),
+            mtrGame: document.getElementById('mtrGameBackBtn'),
             settings: document.getElementById('settingsBackBtn')
         };
         
@@ -1289,7 +1620,7 @@
         
         // 設置返回按鈕點擊事件
         Object.keys(backButtons).forEach(key => {
-            if (key === 'colorGame' || key === 'shapeGame' || key === 'breathingGame') {
+            if (key === 'colorGame' || key === 'shapeGame' || key === 'breathingGame' || key === 'mtrGame') {
                 backButtons[key].addEventListener('click', () => {
                     showPage('games');
                 });
@@ -1317,6 +1648,12 @@
         
         document.getElementById('startBreathingGame').addEventListener('click', () => {
             showPage('breathingGame');
+        });
+        
+        document.getElementById('startMTRGame').addEventListener('click', () => {
+            showPage('mtrGame');
+            // 重置MTR遊戲狀態
+            resetMTRGame();
         });
 
         // 情緒穩定度與波動追蹤
@@ -2895,6 +3232,842 @@
                 });
             });
         }
+        
+        // ========== MTR遊戲功能 ==========
+        
+        // MTR遊戲用戶積分
+        let mtrPoints = 0;
+        
+        // 目前活躍的遊戲模式
+        let activeGameMode = null;
+        
+        // 港鐵顏色數據
+        const mtrColors = [
+            { name: '港島綫', color: '#0091ff' },
+            { name: '觀塘綫', color: '#00a651' },
+            { name: '荃灣綫', color: '#ed1c24' },
+            { name: '東涌綫', color: '#f7943e' },
+            { name: '東鐵綫', color: '#9c27b0' }
+        ];
+        
+        // 初始化MTR遊戲
+        function resetMTRGame() {
+            // 重置遊戲相關元素
+            document.getElementById('mtrGameIntro').classList.remove('hidden');
+            document.querySelectorAll('.game-content').forEach(game => {
+                game.classList.add('hidden');
+                game.classList.remove('active');
+            });
+            document.getElementById('gameComplete').classList.add('hidden');
+            
+            // 重置分數
+            mtrPoints = 0;
+            document.getElementById('mtrGameScore').textContent = '0';
+            
+            // 設置遊戲模式選擇監聽器
+            document.getElementById('findLogoBtn').addEventListener('click', startFindLogoGame);
+            document.getElementById('colorMatchBtn').addEventListener('click', startColorMatchGame);
+            document.getElementById('clickTrainBtn').addEventListener('click', startClickTrainGame);
+            
+            // 設置遊戲開始按鈕
+            document.getElementById('startFindLogoBtn').addEventListener('click', initFindLogoGame);
+            document.getElementById('startColorMatchBtn').addEventListener('click', initColorMatchGame);
+            document.getElementById('startClickTrainBtn').addEventListener('click', initClickTrainGame);
+            
+            // 完成遊戲後按鈕
+            document.getElementById('playAgainBtn').addEventListener('click', () => {
+                // 隱藏遊戲完成界面
+                document.getElementById('gameComplete').classList.add('hidden');
+                
+                // 根據當前活躍遊戲模式重新啟動對應的遊戲
+                if (activeGameMode === 'findLogo') {
+                    document.getElementById('findLogoGame').classList.remove('hidden');
+                    document.getElementById('findLogoGame').classList.add('active');
+                } else if (activeGameMode === 'colorMatch') {
+                    document.getElementById('colorMatchGame').classList.remove('hidden');
+                    document.getElementById('colorMatchGame').classList.add('active');
+                } else if (activeGameMode === 'clickTrain') {
+                    document.getElementById('clickTrainGame').classList.remove('hidden');
+                    document.getElementById('clickTrainGame').classList.add('active');
+                }
+            });
+            
+            document.getElementById('backToGamesBtn').addEventListener('click', () => {
+                showPage('games');
+            });
+        }
+        
+        // ============ 遊戲1：尋找港鐵標誌 ============
+        let findLogoTimer = null;
+        let findLogoTimeLeft = 15;
+        let findLogoScore = 0;
+        let totalLogos = 0;
+        
+        // 開始尋找港鐵標誌遊戲
+        function startFindLogoGame() {
+            // 設置活躍遊戲模式
+            activeGameMode = 'findLogo';
+            
+            // 隱藏介紹，顯示遊戲內容
+            document.getElementById('mtrGameIntro').classList.add('hidden');
+            document.getElementById('findLogoGame').classList.remove('hidden');
+            document.getElementById('findLogoGame').classList.add('active');
+            document.getElementById('gameComplete').classList.add('hidden');
+            
+            // 重置計時器和分數
+            findLogoTimeLeft = 15;
+            findLogoScore = 0;
+            document.getElementById('findLogoTimer').textContent = `剩餘時間：${findLogoTimeLeft}`;
+            
+            // 準備遊戲但不立即開始
+            // 清空網格
+            const grid = document.getElementById('findLogoGrid');
+            grid.innerHTML = '<p class="text-center col-span-full p-4">點擊「開始遊戲」按鈕來開始尋找港鐵標誌！</p>';
+            
+            // 顯示開始按鈕
+            document.getElementById('startFindLogoBtn').textContent = '開始遊戲';
+            document.getElementById('startFindLogoBtn').disabled = false;
+            
+            // 隱藏狀態訊息
+            const statusEl = document.getElementById('findLogoStatus');
+            statusEl.classList.add('hidden');
+        }
+        
+        // 初始化尋找港鐵標誌遊戲
+        function initFindLogoGame() {
+            // 計時器已經運行，則不重新開始
+            if (findLogoTimer) return;
+            
+            // 修改按鈕文本
+            document.getElementById('startFindLogoBtn').textContent = '遊戲進行中...';
+            document.getElementById('startFindLogoBtn').disabled = true;
+            
+            // 重置分數
+            findLogoScore = 0;
+            
+            // 創建卡片網格
+            createFindLogoGrid();
+            
+            // 開始計時器
+            findLogoTimeLeft = 15;
+            document.getElementById('findLogoTimer').textContent = `剩餘時間：${findLogoTimeLeft}`;
+            
+            findLogoTimer = setInterval(() => {
+                findLogoTimeLeft--;
+                document.getElementById('findLogoTimer').textContent = `剩餘時間：${findLogoTimeLeft}`;
+                
+                if (findLogoTimeLeft <= 0) {
+                    endFindLogoGame();
+                }
+            }, 1000);
+        }
+        
+        // 創建尋找標誌遊戲的卡片網格
+        function createFindLogoGrid() {
+            const grid = document.getElementById('findLogoGrid');
+            grid.innerHTML = '';
+            
+            // 生成6x2=12個卡片
+            const totalCards = 12;
+            totalLogos = 5; // 設置標誌數量
+            
+            // 創建卡片數組
+            const cards = [];
+            
+            // 添加有MTR標誌的卡片
+            for (let i = 0; i < totalLogos; i++) {
+                cards.push({
+                    isLogo: true,
+                    color: mtrColors[Math.floor(Math.random() * mtrColors.length)].color
+                });
+            }
+            
+            // 添加無標誌的卡片
+            for (let i = 0; i < totalCards - totalLogos; i++) {
+                cards.push({
+                    isLogo: false,
+                    color: '#cccccc'
+                });
+            }
+            
+            // 隨機打亂卡片順序
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            // 創建卡片元素
+            cards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'aspect-square rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center relative cursor-pointer hover:scale-105 transition-transform';
+                
+                if (card.isLogo) {
+                    // 創建一個包含MTR標誌的卡片
+                    cardEl.innerHTML = `
+                        <div class="rounded-lg w-full h-full flex items-center justify-center" style="background-color: ${card.color}">
+                            <img src="https://pfst.cf2.poecdn.net/base/image/8ca31abfdbf082a9b098aa8d592379d75f27a6cd9da43023f2b04752424529b3?w=225&h=225" alt="MTR Logo" class="w-3/4 h-auto">
+                        </div>
+                    `;
+                    
+                    // 點擊事件
+                    cardEl.addEventListener('click', function() {
+                        if (!this.classList.contains('found') && findLogoTimer) {
+                            // 標記為找到
+                            this.classList.add('found', 'opacity-50');
+                            
+                            // 增加分數
+                            findLogoScore++;
+                            
+                            // 視覺反饋
+                            const feedback = document.createElement('div');
+                            feedback.className = 'absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-70 text-white text-3xl';
+                            feedback.textContent = '+1';
+                            this.appendChild(feedback);
+                            
+                            // 動畫後移除反饋
+                            setTimeout(() => {
+                                feedback.remove();
+                            }, 500);
+                            
+                            // 檢查是否找到所有標誌
+                            if (findLogoScore >= totalLogos) {
+                                // 立即結束遊戲
+                                endFindLogoGame();
+                            }
+                        }
+                    });
+                } else {
+                    // 創建一個不含MTR標誌的卡片
+                    const randomText = ['香港', '九龍', '新界', '港鐵', '地鐵', '車站', '鐵路'][Math.floor(Math.random() * 7)];
+                    cardEl.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center">
+                            <span class="text-gray-600 dark:text-gray-300 font-medium text-lg">${randomText}</span>
+                        </div>
+                    `;
+                    
+                    // 點擊事件 - 錯誤選擇
+                    cardEl.addEventListener('click', function() {
+                        if (!this.classList.contains('misclicked') && findLogoTimer) {
+                            // 標記為點擊過
+                            this.classList.add('misclicked');
+                            
+                            // 視覺反饋
+                            const feedback = document.createElement('div');
+                            feedback.className = 'absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-70 text-white text-2xl';
+                            feedback.textContent = '✕';
+                            this.appendChild(feedback);
+                            
+                            // 動畫後移除反饋
+                            setTimeout(() => {
+                                feedback.remove();
+                            }, 500);
+                        }
+                    });
+                }
+                
+                grid.appendChild(cardEl);
+            });
+        }
+        
+        // 結束尋找標誌遊戲
+        function endFindLogoGame() {
+            // 停止計時器
+            clearInterval(findLogoTimer);
+            findLogoTimer = null;
+            
+            // 計算獲得的積分
+            const earnedPoints = Math.min(10, findLogoScore) * 2;
+            mtrPoints += earnedPoints;
+            
+            // 更新玩家總分數
+            document.getElementById('mtrGameScore').textContent = mtrPoints;
+            
+            // 顯示狀態訊息
+            const statusEl = document.getElementById('findLogoStatus');
+            statusEl.textContent = `遊戲結束！您找到了 ${findLogoScore} 個港鐵標誌。獲得 ${earnedPoints} 積分！`;
+            statusEl.classList.remove('hidden', 'text-red-500', 'bg-red-100', 'dark:bg-red-900');
+            statusEl.classList.add('text-green-500', 'bg-green-100', 'dark:bg-green-900', 'p-4', 'rounded-lg');
+            
+            // 修改按鈕
+            document.getElementById('startFindLogoBtn').textContent = '再玩一次';
+            document.getElementById('startFindLogoBtn').disabled = false;
+            
+            // 顯示所有未找到的標誌
+            const logos = document.querySelectorAll('#findLogoGrid > div');
+            logos.forEach(logo => {
+                if (logo.querySelector('span')?.textContent === 'MTR' && !logo.classList.contains('found')) {
+                    // 高亮未找到的標誌
+                    const highlight = document.createElement('div');
+                    highlight.className = 'absolute inset-0 border-4 border-yellow-500 animate-pulse rounded-lg';
+                    logo.appendChild(highlight);
+                }
+            });
+            
+            // 顯示完成界面
+            setTimeout(() => {
+                showGameComplete(earnedPoints);
+            }, 2000);
+        }
+        
+        // ============ 遊戲2：列車顏色配對 ============
+        let colorMatchActive = false;
+        let selectedTrain = null;
+        let selectedStation = null;
+        let colorMatchPairs = 5;
+        let colorMatchScore = 0;
+        
+        // 開始列車顏色配對遊戲
+        function startColorMatchGame() {
+            // 設置活躍遊戲模式
+            activeGameMode = 'colorMatch';
+            
+            // 隱藏介紹，顯示遊戲內容
+            document.getElementById('mtrGameIntro').classList.add('hidden');
+            document.getElementById('colorMatchGame').classList.remove('hidden');
+            document.getElementById('colorMatchGame').classList.add('active');
+            document.getElementById('gameComplete').classList.add('hidden');
+            
+            // 重置計數器和分數
+            colorMatchPairs = 5;
+            colorMatchScore = 0;
+            document.getElementById('colorMatchCount').textContent = `剩餘：${colorMatchPairs}組`;
+            
+            // 準備遊戲但不立即開始
+            document.getElementById('trainContainer').innerHTML = '<p class="text-center p-4">點擊「開始遊戲」按鈕來開始顏色配對！</p>';
+            document.getElementById('stationContainer').innerHTML = '';
+            
+            // 顯示開始按鈕
+            document.getElementById('startColorMatchBtn').textContent = '開始遊戲';
+            document.getElementById('startColorMatchBtn').disabled = false;
+            
+            // 隱藏狀態訊息
+            const statusEl = document.getElementById('colorMatchStatus');
+            statusEl.classList.add('hidden');
+        }
+        
+        // 初始化列車顏色配對遊戲
+        function initColorMatchGame() {
+            // 如果遊戲已經開始，則不重新開始
+            if (colorMatchActive) return;
+            
+            // 修改按鈕
+            document.getElementById('startColorMatchBtn').textContent = '遊戲進行中...';
+            document.getElementById('startColorMatchBtn').disabled = true;
+            
+            // 開始遊戲
+            colorMatchActive = true;
+            colorMatchScore = 0;
+            colorMatchPairs = 5;
+            document.getElementById('colorMatchCount').textContent = `剩餘：${colorMatchPairs}組`;
+            
+            // 重置選中狀態
+            selectedTrain = null;
+            selectedStation = null;
+            
+            // 創建列車和站點
+            createColorMatchGame();
+            
+            // 隱藏狀態訊息
+            const statusEl = document.getElementById('colorMatchStatus');
+            statusEl.classList.add('hidden');
+        }
+        
+        // 創建列車顏色配對遊戲
+        function createColorMatchGame() {
+            const trainContainer = document.getElementById('trainContainer');
+            const stationContainer = document.getElementById('stationContainer');
+            
+            trainContainer.innerHTML = '';
+            stationContainer.innerHTML = '';
+            
+            // 複製並打亂顏色數組
+            const shuffledColors = [...mtrColors];
+            for (let i = shuffledColors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledColors[i], shuffledColors[j]] = [shuffledColors[j], shuffledColors[i]];
+            }
+            
+            // 創建5個列車和對應的站點
+            const usedColors = shuffledColors.slice(0, 5);
+            
+            // 創建列車元素
+            const trainColors = [...usedColors];
+            // 再次打亂順序
+            for (let i = trainColors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [trainColors[i], trainColors[j]] = [trainColors[j], trainColors[i]];
+            }
+            
+            trainColors.forEach(color => {
+                const trainEl = document.createElement('div');
+                trainEl.className = 'p-4 rounded-lg bg-white dark:bg-gray-700 shadow-md flex items-center cursor-pointer hover:scale-105 transition-transform';
+                trainEl.dataset.color = color.color;
+                trainEl.dataset.name = color.name;
+                
+                trainEl.innerHTML = `
+                    <div class="w-16 h-8 mr-3 rounded-md relative" style="background-color: ${color.color}">
+                        <div class="absolute top-1 left-1 right-1 h-2 bg-white opacity-30 rounded"></div>
+                        <div class="absolute -bottom-1 left-3 w-2 h-2 bg-gray-700 rounded-full"></div>
+                        <div class="absolute -bottom-1 right-3 w-2 h-2 bg-gray-700 rounded-full"></div>
+                    </div>
+                    <div class="text-sm font-medium">${color.name}列車</div>
+                `;
+                
+                trainEl.addEventListener('click', function() {
+                    if (!colorMatchActive) return;
+                    
+                    // 如果已經選中過，則取消選中
+                    if (selectedTrain === this) {
+                        this.classList.remove('ring-2', 'ring-primary');
+                        selectedTrain = null;
+                        return;
+                    }
+                    
+                    // 取消之前選中的列車
+                    if (selectedTrain) {
+                        selectedTrain.classList.remove('ring-2', 'ring-primary');
+                    }
+                    
+                    // 選中當前列車
+                    selectedTrain = this;
+                    this.classList.add('ring-2', 'ring-primary');
+                    
+                    // 檢查是否可以配對
+                    checkColorMatch();
+                });
+                
+                trainContainer.appendChild(trainEl);
+            });
+            
+            // 創建站點元素
+            const stationColors = [...usedColors];
+            // 再次打亂順序
+            for (let i = stationColors.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [stationColors[i], stationColors[j]] = [stationColors[j], stationColors[i]];
+            }
+            
+            stationColors.forEach(color => {
+                const stationEl = document.createElement('div');
+                stationEl.className = 'p-4 rounded-lg bg-white dark:bg-gray-700 shadow-md flex items-center cursor-pointer hover:scale-105 transition-transform';
+                stationEl.dataset.color = color.color;
+                stationEl.dataset.name = color.name;
+                
+                stationEl.innerHTML = `
+                    <div class="w-8 h-8 mr-3 rounded-full flex items-center justify-center" style="background-color: ${color.color}">
+                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <div class="text-sm font-medium">${color.name}站點</div>
+                `;
+                
+                stationEl.addEventListener('click', function() {
+                    if (!colorMatchActive) return;
+                    
+                    // 如果已經選中過，則取消選中
+                    if (selectedStation === this) {
+                        this.classList.remove('ring-2', 'ring-primary');
+                        selectedStation = null;
+                        return;
+                    }
+                    
+                    // 取消之前選中的站點
+                    if (selectedStation) {
+                        selectedStation.classList.remove('ring-2', 'ring-primary');
+                    }
+                    
+                    // 選中當前站點
+                    selectedStation = this;
+                    this.classList.add('ring-2', 'ring-primary');
+                    
+                    // 檢查是否可以配對
+                    checkColorMatch();
+                });
+                
+                stationContainer.appendChild(stationEl);
+            });
+        }
+        
+        // 檢查顏色配對
+        function checkColorMatch() {
+            // 確保已選中一個列車和一個站點
+            if (!selectedTrain || !selectedStation) return;
+            
+            // 檢查顏色是否匹配
+            const trainColor = selectedTrain.dataset.color;
+            const stationColor = selectedStation.dataset.color;
+            
+            if (trainColor === stationColor) {
+                // 配對成功
+                colorMatchScore++;
+                colorMatchPairs--;
+                document.getElementById('colorMatchCount').textContent = `剩餘：${colorMatchPairs}組`;
+                
+                // 視覺反饋
+                const feedback = document.createElement('div');
+                feedback.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white text-3xl p-8 rounded-lg z-50';
+                feedback.textContent = '配對成功！';
+                document.body.appendChild(feedback);
+                
+                // 動畫後移除反饋
+                setTimeout(() => {
+                    feedback.remove();
+                }, 1000);
+                
+                // 移除已配對的元素
+                selectedTrain.classList.add('opacity-50', 'pointer-events-none');
+                selectedStation.classList.add('opacity-50', 'pointer-events-none');
+                
+                // 重置選中狀態
+                selectedTrain = null;
+                selectedStation = null;
+                
+                // 顯示匹配狀態
+                const statusEl = document.getElementById('colorMatchStatus');
+                statusEl.textContent = '配對正確！';
+                statusEl.classList.remove('hidden', 'text-red-500', 'bg-red-100', 'dark:bg-red-900');
+                statusEl.classList.add('text-green-500', 'bg-green-100', 'dark:bg-green-900', 'p-4', 'rounded-lg');
+                
+                // 3秒後隱藏狀態
+                setTimeout(() => {
+                    statusEl.classList.add('hidden');
+                }, 3000);
+                
+                // 檢查遊戲是否結束
+                if (colorMatchPairs <= 0) {
+                    endColorMatchGame();
+                }
+            } else {
+                // 配對失敗
+                
+                // 視覺反饋
+                selectedTrain.classList.add('ring-2', 'ring-red-500');
+                selectedStation.classList.add('ring-2', 'ring-red-500');
+                
+                // 顯示匹配狀態
+                const statusEl = document.getElementById('colorMatchStatus');
+                statusEl.textContent = '配對錯誤，請重試！';
+                statusEl.classList.remove('hidden', 'text-green-500', 'bg-green-100', 'dark:bg-green-900');
+                statusEl.classList.add('text-red-500', 'bg-red-100', 'dark:bg-red-900', 'p-4', 'rounded-lg');
+                
+                // 1秒後重置
+                setTimeout(() => {
+                    selectedTrain.classList.remove('ring-2', 'ring-red-500', 'ring-primary');
+                    selectedStation.classList.remove('ring-2', 'ring-red-500', 'ring-primary');
+                    selectedTrain = null;
+                    selectedStation = null;
+                    
+                    // 3秒後隱藏狀態
+                    setTimeout(() => {
+                        statusEl.classList.add('hidden');
+                    }, 2000);
+                }, 1000);
+            }
+        }
+        
+        // 結束列車顏色配對遊戲
+        function endColorMatchGame() {
+            // 停止遊戲
+            colorMatchActive = false;
+            
+            // 計算獲得的積分
+            const earnedPoints = colorMatchScore * 5;
+            mtrPoints += earnedPoints;
+            
+            // 更新玩家總分數
+            document.getElementById('mtrGameScore').textContent = mtrPoints;
+            
+            // 修改按鈕
+            document.getElementById('startColorMatchBtn').textContent = '再玩一次';
+            document.getElementById('startColorMatchBtn').disabled = false;
+            
+            // 顯示成功訊息
+            const statusEl = document.getElementById('colorMatchStatus');
+            statusEl.textContent = `恭喜完成！您成功配對了 ${colorMatchScore} 組顏色。獲得 ${earnedPoints} 積分！`;
+            statusEl.classList.remove('hidden', 'text-red-500', 'bg-red-100', 'dark:bg-red-900');
+            statusEl.classList.add('text-green-500', 'bg-green-100', 'dark:bg-green-900', 'p-4', 'rounded-lg');
+            
+            // 顯示完成界面
+            setTimeout(() => {
+                showGameComplete(earnedPoints);
+            }, 2000);
+        }
+        
+        // ============ 遊戲3：點擊列車 ============
+        let clickTrainTimer = null;
+        let clickTrainTimeLeft = 20;
+        let clickTrainScore = 0;
+        let clickTrainTarget = 10;
+        let trains = [];
+        
+        // 開始點擊列車遊戲
+        function startClickTrainGame() {
+            // 設置活躍遊戲模式
+            activeGameMode = 'clickTrain';
+            
+            // 隱藏介紹，顯示遊戲內容
+            document.getElementById('mtrGameIntro').classList.add('hidden');
+            document.getElementById('clickTrainGame').classList.remove('hidden');
+            document.getElementById('clickTrainGame').classList.add('active');
+            document.getElementById('gameComplete').classList.add('hidden');
+            
+            // 重置計時器和分數
+            clickTrainTimeLeft = 20;
+            clickTrainScore = 0;
+            document.getElementById('clickTrainTimer').textContent = `剩餘時間：${clickTrainTimeLeft}`;
+            document.getElementById('trainClickCount').textContent = '0';
+            
+            // 準備遊戲但不立即開始
+            const track = document.getElementById('trainTrack');
+            track.innerHTML = '<div id="rail" class="absolute top-1/2 left-0 right-0 h-4 bg-gray-400 dark:bg-gray-600 transform -translate-y-1/2"></div>';
+            track.insertAdjacentHTML('beforeend', '<p class="absolute inset-0 flex items-center justify-center text-gray-600 dark:text-gray-300">點擊「開始遊戲」按鈕來開始！</p>');
+            
+            // 顯示開始按鈕
+            document.getElementById('startClickTrainBtn').textContent = '開始遊戲';
+            document.getElementById('startClickTrainBtn').disabled = false;
+            
+            // 隱藏狀態訊息
+            const statusEl = document.getElementById('clickTrainStatus');
+            statusEl.classList.add('hidden');
+        }
+        
+        // 初始化點擊列車遊戲
+        function initClickTrainGame() {
+            // 計時器已經運行，則不重新開始
+            if (clickTrainTimer) return;
+            
+            // 修改按鈕
+            document.getElementById('startClickTrainBtn').textContent = '遊戲進行中...';
+            document.getElementById('startClickTrainBtn').disabled = true;
+            
+            // 重置分數和目標
+            clickTrainScore = 0;
+            clickTrainTarget = 10;
+            document.getElementById('trainClickCount').textContent = '0';
+            document.getElementById('trainClickTarget').textContent = '10';
+            
+            // 清空列車軌道
+            const track = document.getElementById('trainTrack');
+            track.innerHTML = '<div id="rail" class="absolute top-1/2 left-0 right-0 h-4 bg-gray-400 dark:bg-gray-600 transform -translate-y-1/2"></div>';
+            
+            // 開始生成列車
+            trains = [];
+            generateTrains();
+            
+            // 開始計時器
+            clickTrainTimeLeft = 20;
+            document.getElementById('clickTrainTimer').textContent = `剩餘時間：${clickTrainTimeLeft}`;
+            
+            clickTrainTimer = setInterval(() => {
+                clickTrainTimeLeft--;
+                document.getElementById('clickTrainTimer').textContent = `剩餘時間：${clickTrainTimeLeft}`;
+                
+                if (clickTrainTimeLeft <= 0) {
+                    endClickTrainGame(false);
+                }
+            }, 1000);
+        }
+        
+        // 生成移動的列車
+        function generateTrains() {
+            // 生成新列車的時間間隔
+            const generateInterval = Math.floor(Math.random() * 1000) + 1000; // 1-2秒
+            
+            setTimeout(() => {
+                if (clickTrainTimer) { // 確保遊戲還在進行
+                    createTrain();
+                    generateTrains(); // 遞迴生成更多列車
+                }
+            }, generateInterval);
+        }
+        
+        // 創建一個新的列車
+        function createTrain() {
+            const track = document.getElementById('trainTrack');
+            const trackWidth = track.offsetWidth;
+            const trackHeight = track.offsetHeight;
+            
+            // 隨機選擇一個顏色
+            const colorIndex = Math.floor(Math.random() * mtrColors.length);
+            const trainColor = mtrColors[colorIndex].color;
+            
+            // 創建列車元素
+            const train = document.createElement('div');
+            train.className = 'absolute top-1/2 transform -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform';
+            train.style.left = '-60px'; // 從左側開始
+            
+            // 列車的方向（左到右或右到左）
+            const direction = Math.random() > 0.5 ? 'ltr' : 'rtl';
+            if (direction === 'rtl') {
+                train.style.left = 'auto';
+                train.style.right = '-60px';
+                train.style.transform += ' scaleX(-1)';
+            }
+            
+            train.innerHTML = `
+                <div class="w-16 h-8 rounded-md relative" style="background-color: ${trainColor}">
+                    <div class="absolute top-1 left-1 right-1 h-2 bg-white opacity-30 rounded"></div>
+                    <div class="absolute -bottom-1 left-3 w-2 h-2 bg-gray-700 rounded-full"></div>
+                    <div class="absolute -bottom-1 right-3 w-2 h-2 bg-gray-700 rounded-full"></div>
+                </div>
+            `;
+            
+            // 添加點擊事件
+            train.addEventListener('click', function() {
+                if (!this.classList.contains('clicked')) {
+                    this.classList.add('clicked');
+                    
+                    // 增加分數
+                    clickTrainScore++;
+                    document.getElementById('trainClickCount').textContent = clickTrainScore;
+                    
+                    // 視覺反饋
+                    this.querySelector('div').classList.add('opacity-50');
+                    const feedback = document.createElement('div');
+                    feedback.className = 'absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center text-white font-bold text-xl';
+                    feedback.textContent = '+1';
+                    this.appendChild(feedback);
+                    
+                    // 檢查是否達到目標
+                    if (clickTrainScore >= clickTrainTarget) {
+                        endClickTrainGame(true);
+                    }
+                }
+            });
+            
+            track.appendChild(train);
+            
+            // 保存列車引用
+            trains.push({
+                element: train,
+                direction: direction,
+                speed: Math.random() * 2 + 1 // 1-3px移動速度
+            });
+            
+            // 移動列車
+            moveTrain(trains[trains.length - 1]);
+        }
+        
+        // 移動列車
+        function moveTrain(train) {
+            if (!clickTrainTimer) return; // 遊戲結束則停止移動
+            
+            const trackWidth = document.getElementById('trainTrack').offsetWidth;
+            
+            if (train.direction === 'ltr') {
+                // 左到右移動
+                const currentPos = parseInt(train.element.style.left);
+                const newPos = currentPos + train.speed;
+                train.element.style.left = `${newPos}px`;
+                
+                // 檢查是否移出屏幕
+                if (newPos > trackWidth) {
+                    // 移除列車
+                    train.element.remove();
+                    trains = trains.filter(t => t !== train);
+                } else {
+                    // 繼續移動
+                    requestAnimationFrame(() => moveTrain(train));
+                }
+            } else {
+                // 右到左移動
+                const currentPos = parseInt(train.element.style.right);
+                const newPos = currentPos + train.speed;
+                train.element.style.right = `${newPos}px`;
+                
+                // 檢查是否移出屏幕
+                if (newPos > trackWidth) {
+                    // 移除列車
+                    train.element.remove();
+                    trains = trains.filter(t => t !== train);
+                } else {
+                    // 繼續移動
+                    requestAnimationFrame(() => moveTrain(train));
+                }
+            }
+        }
+        
+        // 結束點擊列車遊戲
+        function endClickTrainGame(isSuccess) {
+            // 停止計時器
+            clearInterval(clickTrainTimer);
+            clickTrainTimer = null;
+            
+            // 停止所有列車移動
+            trains.forEach(train => {
+                train.element.classList.add('opacity-50');
+            });
+            
+            // 計算獲得的積分
+            let earnedPoints = 0;
+            if (isSuccess) {
+                earnedPoints = 20; // 完成目標獲得20積分
+            } else {
+                earnedPoints = Math.floor(clickTrainScore * 1.5); // 未完成目標按點擊數計算
+            }
+            
+            mtrPoints += earnedPoints;
+            
+            // 更新玩家總分數
+            document.getElementById('mtrGameScore').textContent = mtrPoints;
+            
+            // 顯示狀態訊息
+            const statusEl = document.getElementById('clickTrainStatus');
+            if (isSuccess) {
+                statusEl.textContent = `太棒了！您成功點擊了 ${clickTrainScore} 輛列車，達成目標！獲得 ${earnedPoints} 積分！`;
+                statusEl.classList.remove('hidden', 'text-red-500', 'bg-red-100', 'dark:bg-red-900');
+                statusEl.classList.add('text-green-500', 'bg-green-100', 'dark:bg-green-900', 'p-4', 'rounded-lg');
+            } else {
+                statusEl.textContent = `時間到！您點擊了 ${clickTrainScore} 輛列車，獲得 ${earnedPoints} 積分！`;
+                statusEl.classList.remove('hidden');
+                statusEl.classList.add('bg-blue-100', 'dark:bg-blue-900', 'text-blue-500', 'p-4', 'rounded-lg');
+            }
+            
+            // 修改按鈕
+            document.getElementById('startClickTrainBtn').textContent = '再玩一次';
+            document.getElementById('startClickTrainBtn').disabled = false;
+            
+            // 顯示完成界面
+            setTimeout(() => {
+                showGameComplete(earnedPoints);
+            }, 2000);
+        }
+        
+        // 顯示遊戲完成界面
+        function showGameComplete(earnedPoints) {
+            // 隱藏所有遊戲內容
+            document.querySelectorAll('.game-content').forEach(game => {
+                game.classList.add('hidden');
+                game.classList.remove('active');
+            });
+            document.getElementById('mtrGameIntro').classList.add('hidden');
+            
+            // 顯示完成界面
+            const gameComplete = document.getElementById('gameComplete');
+            gameComplete.classList.remove('hidden');
+            
+            // 更新積分
+            document.getElementById('earnedPoints').textContent = earnedPoints;
+            document.getElementById('earnedPoints').classList.add('points-earned');
+            document.getElementById('totalPoints').textContent = mtrPoints;
+            
+            // 移除動畫以便重新觸發
+            setTimeout(() => {
+                document.getElementById('earnedPoints').classList.remove('points-earned');
+            }, 1000);
+        }
+        
+        // 禁止拖動圖片和文本
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'SPAN') {
+                e.preventDefault();
+            }
+        });
+        
+        // 初始化按鈕監聽器
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化MTR遊戲
+            resetMTRGame();
+        });
         
         // 初始化音頻播放器
         initAudioPlayer();
