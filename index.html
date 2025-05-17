@@ -804,7 +804,21 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- 情緒模擬按鈕 -->
+<div class="mb-8">
+    <h3 class="text-lg font-semibold mb-4">情緒狀態模擬</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button id="simulateStableEmotion" class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 transition">
+            模擬穩定情緒
+        </button>
+        <button id="simulateMildEmotionTrigger" class="bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition">
+            模擬輕微波動
+        </button>
+        <button id="simulateSevereEmotionTrigger" class="bg-red-500 text-white py-3 px-4 rounded-lg hover:bg-red-600 transition">
+            模擬嚴重波動
+        </button>
+    </div>
+</div>      
                 <div>
                     <h3 class="text-lg font-semibold mb-4">情緒紀錄</h3>
                     <div class="bg-secondary dark:bg-blue-900 rounded-lg p-4">
@@ -881,8 +895,110 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 餐廳推薦頁面 -->
+
+        // 情緒模擬按鈕
+document.getElementById('simulateStableEmotion').addEventListener('click', function() {
+    emotionalStability = 100;
+    contactedEmergency = false;
+    autoMusicPlayed = false;
+    unstableTimeStart = null;
+    
+    // 更新心率顯示
+    document.getElementById('heartRate').textContent = '75';
+    
+    // 顯示通知
+    showNotification('情緒狀態已恢復穩定', 'green');
+});
+
+document.getElementById('simulateMildEmotionTrigger').addEventListener('click', function() {
+    // 輕微情緒波動 - 設置emotionalStability為65 (輕微不穩定)
+    emotionalStability = 65;
+    
+    if (unstableTimeStart === null) {
+        unstableTimeStart = Date.now();
+    }
+    
+    // 更新心率顯示 (輕微提高)
+    document.getElementById('heartRate').textContent = '90';
+    
+    // 檢查自動播放音樂
+    if (!autoMusicPlayed && document.getElementById('autoPlayMusic').checked) {
+        setTimeout(() => {
+            if (emotionalStability < UNSTABLE_THRESHOLD) {
+                autoPlayMusic();
+                autoMusicPlayed = true;
+            }
+        }, AUTO_PLAY_MUSIC_DELAY);
+    }
+    
+    // 顯示通知
+    showNotification('已偵測到輕微情緒波動', 'yellow');
+});
+
+document.getElementById('simulateSevereEmotionTrigger').addEventListener('click', function() {
+    // 嚴重情緒波動 - 設置emotionalStability為30 (嚴重不穩定)
+    emotionalStability = 30;
+    
+    if (unstableTimeStart === null) {
+        unstableTimeStart = Date.now();
+    }
+    
+    // 更新心率顯示 (顯著提高)
+    document.getElementById('heartRate').textContent = '120';
+    
+    // 檢查自動播放音樂
+    if (!autoMusicPlayed && document.getElementById('autoPlayMusic').checked) {
+        setTimeout(() => {
+            if (emotionalStability < UNSTABLE_THRESHOLD) {
+                autoPlayMusic();
+                autoMusicPlayed = true;
+            }
+        }, AUTO_PLAY_MUSIC_DELAY/2);
+    }
+    
+    // 檢查聯絡緊急人
+    if (!contactedEmergency && document.getElementById('contactEmergency').checked) {
+        setTimeout(() => {
+            if (emotionalStability < SEVERE_THRESHOLD) {
+                contactEmergencyPerson();
+                contactedEmergency = true;
+            }
+        }, EMERGENCY_CONTACT_DELAY/2);
+    }
+    
+    // 顯示通知
+    showNotification('警告：已偵測到嚴重情緒波動', 'red');
+});
+
+// 通知提示函數
+function showNotification(message, color = 'blue') {
+    const colorClasses = {
+        'red': 'bg-red-500',
+        'yellow': 'bg-yellow-500',
+        'green': 'bg-green-500',
+        'blue': 'bg-primary'
+    };
+    const bgColorClass = colorClasses[color] || colorClasses.blue;
+    
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 ${bgColorClass} text-white p-4 rounded-lg shadow-lg z-50 transition-opacity duration-300 opacity-0`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    // 淡入
+    setTimeout(() => {
+        notification.classList.remove('opacity-0');
+        notification.classList.add('opacity-100');
+    }, 10);
+    
+    // 3秒後淡出並移除
+    setTimeout(() => {
+        notification.classList.remove('opacity-100');
+        notification.classList.add('opacity-0');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+                <!-- 餐廳推薦頁面 -->
         <div id="restaurantPage" class="page">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <div class="flex items-center mb-6">
@@ -1039,6 +1155,27 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                         </svg>
                         導航前往
+                        <div class="mb-6">
+    <h3 class="text-lg font-semibold mb-4">您的位置</h3>
+    <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <select id="locationSelect" class="flex-1 bg-transparent py-1 dark:text-white">
+            <option value="旺角站">旺角站</option>
+            <option value="銅鑼灣站">銅鑼灣站</option>
+            <option value="中環站">中環站</option>
+            <option value="尖沙咀站">尖沙咀站</option>
+            <option value="太古站">太古站</option>
+            <option value="觀塘站">觀塘站</option>
+            <option value="荃灣站">荃灣站</option>
+            <option value="沙田站">沙田站</option>
+            <option value="將軍澳站">將軍澳站</option>
+            <option value="元朗站">元朗站</option>
+        </select>
+    </div>
+</div>
                     </button>
                 </div>
             </div>
@@ -1250,6 +1387,7 @@
         </div>
         
         <!-- MTR遊戲頁面 -->
+            
         <div id="mtrGamePage" class="page">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <div class="flex items-center mb-6">
@@ -1262,12 +1400,17 @@
                     <div class="ml-auto flex items-center">
                         <span class="text-lg font-bold mr-2">積分：</span>
                         <span id="mtrGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0</span>
+                        <div class="ml-auto flex items-center">
+    <span class="text-lg font-bold mr-2">積分：</span>
+    <span id="mtrGameScore" class="text-xl font-bold text-primary dark:text-blue-300">0</span>
+    <span class="text-sm ml-2 text-gray-500">/10 每日上限</span>
+</div>
                     </div>
                 </div>
                 
                 <div id="mtrGameIntro" class="mb-8">
                     <p class="text-lg text-center mb-6">選擇一個簡單有趣的港鐵遊戲</p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <p class="text-gray-600 dark:text-gray-300 text-center">完成遊戲可獲得MTR積分！每日最多可賺取10積分</p>                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <!-- 遊戲1：尋找港鐵標誌 -->
                         <button id="findLogoBtn" class="bg-secondary dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 transition p-4 rounded-lg flex flex-col items-center h-full">
                             <div class="w-20 h-20 rounded-lg overflow-hidden mb-3 bg-red-500 flex items-center justify-center">
@@ -1275,6 +1418,32 @@
                             </div>
                             <span class="font-semibold text-lg">尋找港鐵標誌</span>
                             <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">點擊卡片尋找港鐵標誌</p>
+                            // 結束尋找標誌遊戲
+function endFindLogoGame() {
+    // 停止計時器
+    clearInterval(findLogoTimer);
+    findLogoTimer = null;
+    
+    // 計算獲得的積分 (最多2分)
+    const earnedPoints = Math.min(2, findLogoScore);
+    
+    // 檢查每日上限
+    const pointsToAdd = Math.min(earnedPoints, 10 - mtrPoints);
+    
+    if (pointsToAdd > 0) {
+        mtrPoints += pointsToAdd;
+    }
+    
+    // 更新玩家總分數
+    document.getElementById('mtrGameScore').textContent = mtrPoints;
+    
+    // 顯示狀態訊息
+    const statusEl = document.getElementById('findLogoStatus');
+    statusEl.textContent = `遊戲結束！您找到了 ${findLogoScore} 個港鐵標誌。獲得 ${pointsToAdd} 積分！`;
+    statusEl.classList.remove('hidden', 'text-red-500', 'bg-red-100', 'dark:bg-red-900');
+    statusEl.classList.add('text-green-500', 'bg-green-100', 'dark:bg-green-900', 'p-4', 'rounded-lg');
+    }
+                            
                         </button>
                         
                         <!-- 遊戲2：列車顏色配對 -->
@@ -1524,6 +1693,23 @@
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" checked class="sr-only peer">
                                 <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                <div>
+    <h3 class="text-xl font-semibold mb-4">APP 設置</h3>
+    <div class="space-y-4">
+        <div class="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+            <span class="text-lg">深色模式</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="darkModeToggle" class="sr-only peer">
+                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+            </label>
+        </div>
+        <!-- Other toggles here -->
+    </div
+        <div class="mt-8">
+    <button id="saveSettingsBtn" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-400 transition font-semibold text-lg">
+        儲存設定
+    </button>
+</div>
                             </label>
                         </div>
                     </div>
@@ -4077,6 +4263,72 @@
         
         // 初始化餐廳功能
         initRestaurantFeatures();
+        // 儲存設定按鈕功能
+document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+    // 收集表單數據
+    const formData = {
+        name: document.querySelector('#settingsPage input[placeholder="請輸入您的姓名"]').value,
+        age: document.querySelector('#settingsPage input[placeholder="請輸入您的年齡"]').value,
+        gender: document.querySelector('#settingsPage select').value,
+        phone: document.querySelector('#settingsPage input[placeholder="請輸入您的電話號碼"]').value,
+        emergencyContact: {
+            name: document.getElementById('emergencyContactName').value,
+            phone: document.getElementById('emergencyContactPhone').value,
+            relation: document.getElementById('emergencyContactRelation').value
+        },
+        preferences: {
+            darkMode: document.getElementById('darkModeToggle').checked,
+            notification: document.querySelector('#settingsPage .space-y-4 .flex:nth-child(2) input').checked,
+            location: document.querySelector('#settingsPage .space-y-4 .flex:nth-child(3) input').checked
+        }
+    };
+    
+    // 將數據保存到 localStorage (假設此功能可用)
+    try {
+        localStorage.setItem('userSettings', JSON.stringify(formData));
+        
+        // 顯示成功訊息
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50';
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>設置已成功保存</span>
+            </div>
+        `;
+        document.body.appendChild(notification);
+        
+        // 3秒後移除通知
+        setTimeout(() => {
+            notification.classList.add('opacity-0');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    } catch (e) {
+        // 顯示保存失敗訊息
+        console.error('保存設置失敗:', e);
+        
+        // 顯示模擬成功訊息（在無法使用 localStorage 的環境中）
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50';
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>設置已成功保存（模擬）</span>
+            </div>
+        `;
+        document.body.appendChild(notification);
+        
+        // 3秒後移除通知
+        setTimeout(() => {
+            notification.classList.add('opacity-0');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+});
     </script>
 </body>
 </html>
